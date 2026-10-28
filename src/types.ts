@@ -1,0 +1,141 @@
+/**
+ * Format des données d'une page de plan (voir src/data/plan-*.ts).
+ * Toutes les coordonnées sont exprimées en pixels de l'image d'origine
+ * (repère du viewBox "0 0 width height"). Utilisez le mode ?edit pour les relever.
+ */
+
+/** Marque une valeur non validée : un badge « À confirmer » s'affiche dans l'interface. */
+interface MaybeProvisional {
+  provisoire?: boolean;
+}
+
+export type HotspotGeometry =
+  /** coords = [cx, cy, r] */
+  | { shape: 'circle'; coords: [number, number, number] }
+  /** coords = [x1, y1, x2, y2, x3, y3, ...] */
+  | { shape: 'polygon'; coords: number[] };
+
+export type Hotspot = HotspotGeometry &
+  MaybeProvisional & {
+    id: string;
+    label: string;
+    description: string;
+    /** Consigne mise en avant dans le panneau d'info */
+    consigne?: string;
+    color: string;
+  };
+
+export interface Route {
+  id: string;
+  label: string;
+  /** Attribut `d` d'un <path> SVG, dans le sens de circulation */
+  d: string;
+  color: string;
+  /** Étapes réparties uniformément le long du tracé */
+  steps: string[];
+}
+
+export interface Marker extends MaybeProvisional {
+  id: string;
+  type: 'assembly' | 'you-are-here';
+  label: string;
+  x: number;
+  y: number;
+  description?: string;
+}
+
+export interface Rule extends MaybeProvisional {
+  title: string;
+  text: string;
+}
+
+/** Catégories de couleur des étiquettes de stocks et bâtiments (couleurs dans AnnotationLayer) */
+export type AreaKind =
+  | 'stock'
+  | 'reserve'
+  | 'green'
+  | 'blue'
+  | 'orange'
+  | 'navy'
+  | 'dark'
+  | 'building'
+  | 'plant'
+  | 'parking'
+  | 'tremie'
+  | 'wait';
+
+export type AnnotationShape =
+  /** rect = [x, y, largeur, hauteur] */
+  | { rect: [number, number, number, number] }
+  /** polygon = [x1, y1, x2, y2, ...] (format exporté par l'outil « Zone polygone » du mode ?edit) */
+  | { polygon: number[] };
+
+export type AnnotationArea = AnnotationShape & {
+  kind: AreaKind;
+  /** Retour à la ligne avec \n */
+  label?: string;
+  /** Texte écrit verticalement */
+  vertical?: boolean;
+  /** Taille de texte maximale (par défaut : ajustée à la surface) */
+  fontSize?: number;
+};
+
+/** Annotations dessinées sur la photo, dans le repère du plan (0 0 width height). */
+export interface Annotations {
+  /** Étiquettes des stocks et bâtiments */
+  areas: AnnotationArea[];
+  /** Panneaux sens interdit : [x, y] */
+  noEntry: [number, number][];
+  /** Flèches de sens de circulation (tracé dans le sens de la flèche) */
+  arrows?: { d: string; color: string }[];
+  /** Textes libres */
+  labels?: { x: number; y: number; text: string; size?: number; anchor?: 'start' | 'middle' | 'end' }[];
+}
+
+export interface PlanData {
+  title: string;
+  description: string;
+  /** Texte alternatif de l'image */
+  imageAlt: string;
+  /** Photo aérienne du plan */
+  image: string;
+  /** Mention de source affichée sous le plan (ex. « © IGN ») */
+  imageCredit?: string;
+  /** Étiquettes, flèches et panneaux dessinés par-dessus la photo */
+  annotations?: Annotations;
+  /** Légende des couleurs affichée sous le plan */
+  legend?: { color: string; label: string }[];
+  /**
+   * Repère des coordonnées (viewBox "0 0 width height").
+   * L'image peut être plus grande (ex. 3 fois) tant qu'elle a les mêmes proportions.
+   */
+  width: number;
+  height: number;
+  hotspots: Hotspot[];
+  routes: Route[];
+  defaultRoute: string;
+  markers: Marker[];
+  rules: Rule[];
+}
+
+/** Contenu affiché dans l'InfoSheet */
+export interface InfoItem {
+  id: string;
+  title: string;
+  description?: string;
+  consigne?: string;
+  color: string;
+  provisoire?: boolean;
+}
+
+/**
+ * Page simple qui retranscrit une affiche (plan 2).
+ * Mise en forme légère dans les textes : **gras** et [[badge]] (étiquette verte « ← badge »).
+ */
+export interface ProcedureData {
+  title: string;
+  description: string;
+  steps: string[];
+  /** Encadrés après les étapes (ex. « En cas de problème », « Info ») */
+  notes: { label: string; text: string; tone: 'info' | 'warning'; /** Pictogramme attention avant le titre */ attention?: boolean }[];
+}

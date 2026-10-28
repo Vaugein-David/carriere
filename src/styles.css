@@ -1,0 +1,1019 @@
+/* Carrière — styles mobile-first, fort contraste (lisible en plein soleil) */
+
+:root {
+  --ink: #0b0b0b;
+  --paper: #f4f3ee;
+  --card: #ffffff;
+  --yellow: #ffd400;
+  --red: #b00012;
+  --blue: #0050e6;
+  --focus: #0050e6;
+  --radius: 14px;
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 18px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  padding-bottom: 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+:where(a, button, [tabindex]):focus-visible {
+  outline: 4px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------- En-tête ---------- */
+
+.page-header {
+  color: var(--ink);
+  padding: calc(env(safe-area-inset-top) + 16px) 16px 4px;
+}
+
+.page-header > * {
+  max-width: 960px;
+  margin-inline: auto;
+}
+
+.eyebrow {
+  margin-top: 0;
+  margin-bottom: 4px;
+  color: #555;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: clamp(28px, 7.5vw, 40px);
+  line-height: 1.1;
+  font-weight: 850;
+}
+
+.lead {
+  margin-top: 8px;
+  margin-bottom: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.page-main {
+  max-width: 992px;
+  margin: 0 auto;
+  padding-top: 14px;
+}
+
+/* ---------- Choix d'itinéraire ---------- */
+
+.chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 0 16px 12px;
+  scrollbar-width: none;
+}
+
+.chips::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 750;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--ink);
+  color: #fff;
+}
+
+.chip-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--chip-color);
+  border: 2px solid currentColor;
+}
+
+/* ---------- Plan ---------- */
+
+.viewer {
+  position: relative;
+  /* Hauteur adaptée au format de l'image, bornée pour laisser voir la suite de la page */
+  height: clamp(300px, calc(100vw * var(--ratio, 0.75)), min(64svh, 780px));
+  overflow: hidden;
+  background: #1b1b1b;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  cursor: grab;
+}
+
+.viewer:active {
+  cursor: grabbing;
+}
+
+.viewer:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 4px var(--yellow);
+}
+
+@media (min-width: 720px) {
+  .viewer {
+    height: clamp(300px, calc((min(100vw, 992px) - 32px) * var(--ratio, 0.75)), min(70svh, 780px));
+    margin: 0 16px;
+    border: 3px solid #000;
+    border-radius: var(--radius);
+  }
+}
+
+.viewer-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+}
+
+.viewer-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Masqué jusqu'au fondu d'intro (GSAP pose ensuite l'opacité en ligne) */
+.viewer:not(.is-live) .viewer-img {
+  opacity: 0;
+}
+
+.image-credit {
+  margin: 4px 16px 0;
+  color: #555;
+  font-size: 13px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 10px 16px 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-swatch {
+  width: 26px;
+  height: 8px;
+  border: 1.5px solid #000;
+  border-radius: 4px;
+}
+
+.annot-arrow path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.annot-arrow-casing {
+  stroke: #000;
+  stroke-opacity: 0.6;
+  stroke-width: 5.5;
+}
+
+.annot-arrow-line {
+  stroke-width: 3;
+}
+
+/* Étiquettes des stocks posées sur la photo */
+.annot-shape {
+  fill-opacity: 0.82;
+  stroke: #2B2B2B;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.annot-label,
+.annot-text {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 800;
+  pointer-events: none;
+}
+
+.annot-text {
+  fill: #1A1A1A;
+  stroke: #fff;
+  stroke-width: 3;
+  stroke-linejoin: round;
+  paint-order: stroke;
+}
+
+.viewer-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.viewer:not(.is-loaded) .viewer-svg {
+  visibility: hidden;
+}
+
+.viewer-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  color: #fff;
+  font-weight: 700;
+}
+
+.viewer-controls {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.map-btn {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #000;
+  border-radius: 12px;
+  background: #fff;
+  color: #000;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.4);
+  cursor: pointer;
+}
+
+.map-btn:active {
+  transform: scale(0.94);
+}
+
+.icon {
+  width: 26px;
+  height: 26px;
+  flex: none;
+}
+
+.viewer-tip {
+  margin: 8px 16px 0;
+  color: #333;
+  font-size: 15px;
+}
+
+/* Zones cliquables */
+
+.hotspot {
+  cursor: pointer;
+  outline: none;
+}
+
+.hotspot-casing {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: 0.55;
+  stroke-linejoin: round;
+}
+
+.hotspot-shape {
+  fill: var(--hs-color);
+  fill-opacity: 0.22;
+  stroke: var(--hs-color);
+  stroke-linejoin: round;
+  transition: fill-opacity 0.2s;
+}
+
+.hotspot:hover .hotspot-shape,
+.hotspot.is-selected .hotspot-shape {
+  fill-opacity: 0.5;
+}
+
+.hotspot-focus {
+  fill: none;
+  stroke: var(--focus);
+  stroke-linejoin: round;
+  opacity: 0;
+}
+
+.hotspot:focus-visible .hotspot-focus,
+.hotspot.is-selected .hotspot-focus {
+  opacity: 1;
+}
+
+.hotspot.is-selected .hotspot-focus {
+  stroke: #fff;
+}
+
+.hotspot-hit {
+  fill: transparent;
+  stroke: transparent;
+  pointer-events: all;
+}
+
+.hotspot-pulse {
+  fill: none;
+  stroke: var(--hs-color);
+  stroke-width: calc(var(--u) * 3px);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.viewer.is-live .hotspot-pulse {
+  animation: hs-pulse 2.6s ease-out infinite;
+}
+
+.viewer.is-live .hotspot--polygon .hotspot-pulse {
+  animation-name: hs-pulse-soft;
+}
+
+@keyframes hs-pulse {
+  0% {
+    opacity: 0.95;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+
+@keyframes hs-pulse-soft {
+  0% {
+    opacity: 0.95;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+}
+
+/* Itinéraires */
+
+.routes {
+  pointer-events: none;
+}
+
+.route-casing,
+.route-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.route-casing {
+  stroke: #000;
+  stroke-opacity: 0.6;
+}
+
+.route-chevron {
+  fill: none;
+  stroke: var(--chevron, #000);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Marqueurs */
+
+.marker {
+  cursor: pointer;
+  outline: none;
+}
+
+.marker-label {
+  fill: #fff;
+  stroke: #000;
+  paint-order: stroke;
+  stroke-linejoin: round;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 850;
+  pointer-events: none;
+}
+
+.marker-hit {
+  fill: transparent;
+  pointer-events: all;
+}
+
+.marker-core {
+  stroke: #fff;
+}
+
+.marker:focus-visible .marker-core {
+  stroke: var(--yellow);
+}
+
+.marker--assembly .marker-core {
+  fill: #d50000;
+}
+
+.marker-glyph {
+  fill: #fff;
+  pointer-events: none;
+}
+
+.marker-ring {
+  fill: none;
+  stroke: #ff1a1a;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.viewer.is-live .marker-ring {
+  animation: ring 2s ease-out infinite;
+}
+
+.viewer.is-live .marker-ring--late {
+  animation-delay: 1s;
+}
+
+@keyframes ring {
+  0% {
+    opacity: 0.95;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3.2);
+  }
+}
+
+.marker-flash {
+  fill: rgb(255 0 0 / 0.3);
+  stroke: #ff0000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.marker--here .marker-core {
+  fill: #0050e6;
+}
+
+.marker-halo {
+  fill: #0050e6;
+  opacity: 0.3;
+}
+
+/* Mode édition */
+
+.viewer.is-editing {
+  cursor: crosshair;
+}
+
+.viewer.is-editing .hotspot,
+.viewer.is-editing .marker {
+  pointer-events: none;
+}
+
+.edit-overlay {
+  pointer-events: none;
+}
+
+.edit-overlay path,
+.edit-overlay polygon,
+.edit-overlay > circle {
+  fill: rgb(255 0 255 / 0.15);
+  stroke: #ff00ff;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.edit-overlay path {
+  fill: none;
+}
+
+.edit-vertex {
+  fill: #fff;
+  stroke: #ff00ff;
+}
+
+.edit-index {
+  fill: #fff;
+  stroke: #000;
+  paint-order: stroke;
+  font-family: ui-monospace, Menlo, monospace;
+  font-weight: 800;
+}
+
+.edit-cross line {
+  stroke: #00e5ff;
+}
+
+.viewer-hud {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  z-index: 1;
+  margin: 0;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgb(0 0 0 / 0.85);
+  color: var(--yellow);
+  font: 700 17px ui-monospace, Menlo, monospace;
+  pointer-events: none;
+}
+
+.edit-panel {
+  margin: 12px 16px 0;
+  padding: 16px;
+  border: 3px dashed #ff00ff;
+  border-radius: var(--radius);
+  background: #161616;
+  color: #fff;
+}
+
+.edit-panel h2 {
+  margin: 0 0 10px;
+  font-size: 21px;
+}
+
+.edit-modes,
+.edit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.edit-actions {
+  margin: 10px 0;
+}
+
+.edit-hint,
+.edit-last {
+  margin: 10px 0 0;
+}
+
+.edit-warning {
+  margin: 0 0 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #ffdede;
+  color: #5a0000;
+  font-weight: 700;
+}
+
+.edit-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+}
+
+.edit-toggle input {
+  width: 22px;
+  height: 22px;
+}
+
+.edit-code-label {
+  display: block;
+  margin-top: 6px;
+  font-weight: 700;
+}
+
+.edit-code {
+  display: block;
+  width: 100%;
+  margin: 8px 0 10px;
+  padding: 10px;
+  border: 2px solid #444;
+  border-radius: 8px;
+  background: #000;
+  color: #a6ffb0;
+  font: 14px/1.45 ui-monospace, Menlo, monospace;
+  resize: vertical;
+}
+
+.edit-copied {
+  margin: 8px 0 0;
+  color: var(--yellow);
+  font-weight: 700;
+}
+
+/* ---------- Sections ---------- */
+
+.sections {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* Grand écran : deux colonnes où les blocs s'empilent sans laisser de vide */
+@media (min-width: 900px) {
+  .sections {
+    display: block;
+    columns: 2;
+    column-gap: 16px;
+  }
+
+  .sections > * {
+    break-inside: avoid;
+    margin-bottom: 16px;
+  }
+}
+
+.card {
+  padding: 16px;
+  border: 2px solid #000;
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.card h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-size: 23px;
+  line-height: 1.2;
+  font-weight: 850;
+}
+
+.title-swatch {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #000;
+  border-radius: 5px;
+}
+
+.steps {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  transition:
+    background-color 0.25s,
+    border-color 0.25s;
+}
+
+.step-num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #000;
+  color: #fff;
+  font-weight: 800;
+}
+
+.step-text {
+  padding-top: 3px;
+}
+
+.step.is-current {
+  border-color: #000;
+  background: var(--yellow);
+  font-weight: 750;
+}
+
+.step.is-current .step-num {
+  color: var(--yellow);
+}
+
+.rules {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rule {
+  display: grid;
+  gap: 4px;
+  padding: 12px 0;
+  border-top: 2px solid #e2e2e2;
+}
+
+.rule:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.rule-title {
+  font-size: 19px;
+}
+
+.badge-provisoire {
+  justify-self: start;
+  display: inline-block;
+  margin: 0;
+  padding: 2px 8px;
+  border: 2px dashed #7a5900;
+  border-radius: 6px;
+  background: #fff1bf;
+  color: #4d3800;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.zone-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.zone-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 54px;
+  padding: 8px 14px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  background: #f3f3f3;
+  color: var(--ink);
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.zone-dot {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #000;
+  border-radius: 50%;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 10px 16px;
+  border: 2px solid #000;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: var(--yellow);
+}
+
+/* ---------- Page procédure (plan 2) ---------- */
+
+/* Titre comme sur l'affiche : « Fonctionnement » en gras, la suite plus légère */
+.page-header--poster h1 {
+  font-weight: 500;
+}
+
+.page-header--poster h1 strong {
+  font-weight: 900;
+}
+
+.procedure {
+  padding: 16px 16px 0;
+}
+
+.procedure-steps {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.procedure-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  border: 2px solid #000;
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.procedure-num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: 2px solid #000;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.procedure-step-title {
+  margin: 2px 0 4px;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #444;
+}
+
+.procedure-step-text {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.45;
+}
+
+.badge-tag {
+  display: inline-block;
+  padding: 0 8px;
+  border: 2px solid #0a5c2a;
+  border-radius: 6px;
+  background: #1f9d4c;
+  color: #fff;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.procedure-note {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 2px solid #000;
+  border-radius: var(--radius);
+}
+
+.procedure-note h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.procedure-note p {
+  margin: 0;
+  font-size: 19px;
+}
+
+.procedure-note--info {
+  background: var(--yellow);
+}
+
+/* Sur fond jaune, le triangle reçoit un fond blanc pour rester visible */
+.procedure-note--info .icon-attention path:first-child {
+  fill: #fff;
+}
+
+.procedure-note .icon-attention {
+  width: 30px;
+  height: 30px;
+}
+
+/* ---------- Panneau d'info ---------- */
+
+.info-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  max-width: 640px;
+  max-height: 52svh;
+  margin: 0 auto;
+  padding: 0 18px calc(18px + env(safe-area-inset-bottom));
+  overflow: auto;
+  border: 3px solid #000;
+  border-bottom: 0;
+  border-radius: 18px 18px 0 0;
+  background: #fff;
+  box-shadow: 0 -10px 30px rgb(0 0 0 / 0.35);
+  overscroll-behavior: contain;
+}
+
+.info-sheet__bar {
+  height: 10px;
+  margin: 0 -18px 12px;
+  border-bottom: 2px solid #000;
+  background: var(--sheet-color);
+}
+
+.info-sheet__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.info-sheet h2 {
+  margin: 6px 0 8px;
+  font-size: 25px;
+  line-height: 1.15;
+}
+
+.info-sheet__desc {
+  margin: 8px 0 0;
+}
+
+.info-sheet__consigne {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  background: var(--yellow);
+}
+
+.icon-btn {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 2px solid #000;
+  border-radius: 12px;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+/* ---------- Mouvement réduit ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .viewer.is-live .hotspot-pulse,
+  .viewer.is-live .marker-ring {
+    animation: none;
+  }
+  .step,
+  .hotspot-shape {
+    transition: none;
+  }
+}
