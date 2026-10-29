@@ -11,6 +11,12 @@ La page 2 est une page simple qui retranscrit l'affiche du poste de chargement :
 
 Stack : Vite (multi-page, sans routeur) + React + TypeScript strict + GSAP. PWA hors ligne via `vite-plugin-pwa`.
 
+## Langues
+
+Les deux pages existent en **français, anglais, roumain et polonais** (boutons FR · EN · RO · PL en haut de page). La langue du téléphone est choisie automatiquement ; le choix du visiteur est mémorisé.
+
+Dans `src/data/*.ts`, chaque texte s'écrit `{ fr: '…', en: '…', ro: '…', pl: '…' }`. Une langue absente affiche le français. Les textes de l'interface (boutons, titres de blocs) sont dans `src/i18n.tsx`.
+
 ## Développement
 
 ```bash

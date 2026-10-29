@@ -1,6 +1,7 @@
 import type { CSSProperties, KeyboardEvent, SVGProps } from 'react';
 import type { Hotspot as HotspotData } from '../types';
 import { pairs, pointsAttr } from '../lib/geometry';
+import { ui, useT } from '../i18n';
 
 interface Props {
   hotspot: HotspotData;
@@ -27,6 +28,7 @@ function Shape({ hotspot, className, ...rest }: { hotspot: HotspotData; classNam
 }
 
 export function Hotspot({ hotspot, u, index, selected, interactive, onSelect }: Props) {
+  const t = useT();
   const onKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -46,7 +48,7 @@ export function Hotspot({ hotspot, u, index, selected, interactive, onSelect }: 
       data-hotspot={hotspot.id}
       role={interactive ? 'button' : undefined}
       tabIndex={interactive ? 0 : -1}
-      aria-label={interactive ? `${hotspot.label} : afficher les informations` : undefined}
+      aria-label={interactive ? `${t(hotspot.label)} : ${t(ui.showInfo)}` : undefined}
       aria-hidden={interactive ? undefined : true}
       onClick={interactive ? () => onSelect(hotspot) : undefined}
       onKeyDown={interactive ? onKeyDown : undefined}

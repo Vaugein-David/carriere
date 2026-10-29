@@ -2,28 +2,86 @@ import type { ProcedureData } from '../types';
 
 /**
  * PAGE 2 — Fonctionnement du poste de chargement.
- * Retranscription fidèle de l'affiche (sources/plan-2-affiche.webp).
+ * Retranscription fidèle de l'affiche (sources/plan-2-affiche.webp), en 4 langues.
+ * Mise en forme : **gras** et [[badge]] (étiquette verte « ← badge » du lecteur).
  */
 export const plan2: ProcedureData = {
-  // Comme sur l'affiche : « Fonctionnement » en gras, « Poste de chargement » plus léger
-  title: '**Fonctionnement** Poste de chargement',
-  description: 'Chargement à la trémie en 6 étapes.',
+  eyebrow: { fr: 'Plan 2 · Trémie', en: 'Map 2 · Hopper', ro: 'Plan 2 · Buncăr', pl: 'Plan 2 · Kosz zasypowy' },
+  // Comme sur l'affiche : « Fonctionnement » en gras, la suite plus légère
+  title: {
+    fr: '**Fonctionnement** Poste de chargement',
+    en: '**How to use** the loading point',
+    ro: '**Funcționarea** punctului de încărcare',
+    pl: '**Obsługa** punktu załadunku',
+  },
+  description: {
+    fr: 'Chargement à la trémie en 6 étapes.',
+    en: 'Loading at the hopper in 6 steps.',
+    ro: 'Încărcarea la buncăr în 6 pași.',
+    pl: 'Załadunek pod koszem w 6 krokach.',
+  },
 
   steps: [
-    'Présenter le **badge** sur le **premier boîtier** qui se trouve **avant la trémie sur votre gauche**, sur le lecteur qui est désigné par une flèche verte avec écrit [[badge]].',
-    'Une fois que le **feu passe au vert** et que **l’alarme retentit**, avancer **uniquement en marche avant sous la trémie**.',
-    'Appuyez sur le **bouton vert** à votre gauche pour valider le chargement.',
-    'Vérifier sur l’**afficheur** que c’est le **bon produit** qui est en cours de chargement.',
-    'S’aider du **miroir** et/ou du **poids affiché** sur l’afficheur pour répartir le chargement dans la benne.',
-    'Une fois le chargement terminé, l’afficheur indique : **« Chargement terminé. Bonne route. »**',
+    {
+      fr: 'Présenter le **badge** sur le **premier boîtier** qui se trouve **avant la trémie sur votre gauche**, sur le lecteur qui est désigné par une flèche verte avec écrit [[badge]].',
+      en: 'Present your **badge** at the **first box**, located **before the hopper on your left**, on the reader marked by a green arrow labelled [[badge]].',
+      ro: 'Prezentați **ecusonul** la **prima cutie**, aflată **înainte de buncăr, pe partea stângă**, pe cititorul indicat de o săgeată verde cu inscripția [[badge]].',
+      pl: 'Przyłóż **identyfikator** do **pierwszej skrzynki**, która znajduje się **przed koszem po lewej stronie**, do czytnika oznaczonego zieloną strzałką z napisem [[badge]].',
+    },
+    {
+      fr: 'Une fois que le **feu passe au vert** et que **l’alarme retentit**, avancer **uniquement en marche avant sous la trémie**.',
+      en: 'Once the **light turns green** and the **alarm sounds**, drive **forwards only under the hopper**.',
+      ro: 'După ce **semaforul devine verde** și **alarma sună**, înaintați **doar cu mersul înainte sub buncăr**.',
+      pl: 'Gdy **światło zmieni się na zielone** i **zabrzmi sygnał**, wjedź **wyłącznie przodem pod kosz**.',
+    },
+    {
+      fr: 'Appuyez sur le **bouton vert** à votre gauche pour valider le chargement.',
+      en: 'Press the **green button** on your left to confirm the loading.',
+      ro: 'Apăsați **butonul verde** din stânga pentru a valida încărcarea.',
+      pl: 'Naciśnij **zielony przycisk** po lewej stronie, aby zatwierdzić załadunek.',
+    },
+    {
+      fr: 'Vérifier sur l’**afficheur** que c’est le **bon produit** qui est en cours de chargement.',
+      en: 'Check on the **display** that the **right product** is being loaded.',
+      ro: 'Verificați pe **afișaj** că se încarcă **produsul corect**.',
+      pl: 'Sprawdź na **wyświetlaczu**, czy ładowany jest **właściwy produkt**.',
+    },
+    {
+      fr: 'S’aider du **miroir** et/ou du **poids affiché** sur l’afficheur pour répartir le chargement dans la benne.',
+      en: 'Use the **mirror** and/or the **weight shown** on the display to spread the load evenly in the body.',
+      ro: 'Folosiți **oglinda** și/sau **greutatea afișată** pe afișaj pentru a repartiza încărcătura în benă.',
+      pl: 'Korzystaj z **lusterka** i/lub **wagi pokazanej** na wyświetlaczu, aby równomiernie rozłożyć ładunek na skrzyni.',
+    },
+    {
+      fr: 'Une fois le chargement terminé, l’afficheur indique : **« Chargement terminé. Bonne route. »**',
+      en: 'When loading is finished, the display shows: **« Chargement terminé. Bonne route. »** (Loading finished. Have a safe trip.)',
+      ro: 'La finalul încărcării, afișajul indică: **« Chargement terminé. Bonne route. »** (Încărcare terminată. Drum bun.)',
+      pl: 'Po zakończeniu załadunku wyświetlacz pokaże: **« Chargement terminé. Bonne route. »** (Załadunek zakończony. Szerokiej drogi.)',
+    },
   ],
 
   notes: [
     {
+      tone: 'warning',
+      label: { fr: 'En cas de problème', en: 'If there is a problem', ro: 'În caz de problemă', pl: 'W razie problemu' },
+      text: {
+        fr: 'Appelez la **bascule** :',
+        en: 'Call the **weighbridge**:',
+        ro: 'Sunați la **cântar**:',
+        pl: 'Zadzwoń na **wagę**:',
+      },
+      tel: '06 02 12 63 58',
+    },
+    {
       tone: 'info',
-      label: 'Info',
+      label: { fr: 'Info', en: 'Info', ro: 'Info', pl: 'Informacja' },
       attention: true,
-      text: 'L’attente pour la trémie se fait **le long du parking à engins**.',
+      text: {
+        fr: 'L’attente pour la trémie se fait **le long du parking à engins**.',
+        en: 'Wait for the hopper **along the plant parking area**.',
+        ro: 'Așteptarea pentru buncăr se face **de-a lungul parcării utilajelor**.',
+        pl: 'Na kosz czeka się **wzdłuż parkingu maszyn**.',
+      },
     },
   ],
 };

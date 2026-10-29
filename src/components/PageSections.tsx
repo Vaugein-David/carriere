@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import type { Hotspot, Route, Rule } from '../types';
+import { ui, useT } from '../i18n';
 
 export function RouteChips({
   routes,
@@ -10,9 +11,10 @@ export function RouteChips({
   activeId: string;
   onChange: (id: string) => void;
 }) {
+  const t = useT();
   if (routes.length < 2) return null;
   return (
-    <div className="chips" role="group" aria-label="Choisir un itinéraire">
+    <div className="chips" role="group" aria-label={t(ui.chooseRoute)}>
       {routes.map((r) => (
         <button
           key={r.id}
@@ -23,7 +25,7 @@ export function RouteChips({
           style={{ '--chip-color': r.color } as CSSProperties}
         >
           <span className="chip-dot" aria-hidden="true" />
-          {r.label}
+          {t(r.label)}
         </button>
       ))}
     </div>
@@ -31,12 +33,13 @@ export function RouteChips({
 }
 
 export function RouteSteps({ route, current }: { route: Route | undefined; current: number }) {
+  const t = useT();
   if (!route || route.steps.length === 0) return null;
   return (
     <section className="card" aria-labelledby="steps-title">
       <h2 id="steps-title">
         <span className="title-swatch" style={{ background: route.color }} aria-hidden="true" />
-        {route.label}
+        {t(route.label)}
       </h2>
       <ol className="steps">
         {route.steps.map((s, i) => (
@@ -48,7 +51,7 @@ export function RouteSteps({ route, current }: { route: Route | undefined; curre
             <span className="step-num" aria-hidden="true">
               {i + 1}
             </span>
-            <span className="step-text">{s}</span>
+            <span className="step-text">{t(s)}</span>
           </li>
         ))}
       </ol>
@@ -57,16 +60,17 @@ export function RouteSteps({ route, current }: { route: Route | undefined; curre
 }
 
 export function ZoneList({ hotspots, onSelect }: { hotspots: Hotspot[]; onSelect: (id: string) => void }) {
+  const t = useT();
   if (hotspots.length === 0) return null;
   return (
     <section className="card" aria-labelledby="zones-title">
-      <h2 id="zones-title">Zones du plan</h2>
+      <h2 id="zones-title">{t(ui.zones)}</h2>
       <ul className="zone-list">
         {hotspots.map((h) => (
           <li key={h.id}>
             <button type="button" className="zone-btn" onClick={() => onSelect(h.id)}>
               <span className="zone-dot" style={{ background: h.color }} aria-hidden="true" />
-              {h.label}
+              {t(h.label)}
             </button>
           </li>
         ))}
@@ -76,16 +80,17 @@ export function ZoneList({ hotspots, onSelect }: { hotspots: Hotspot[]; onSelect
 }
 
 export function SafetyRules({ rules }: { rules: Rule[] }) {
+  const t = useT();
   if (rules.length === 0) return null;
   return (
     <section className="card card--rules" aria-labelledby="rules-title">
-      <h2 id="rules-title">Consignes de sécurité</h2>
+      <h2 id="rules-title">{t(ui.rules)}</h2>
       <ul className="rules">
-        {rules.map((r) => (
-          <li key={r.title} className="rule">
-            <strong className="rule-title">{r.title}</strong>
-            <span className="rule-text">{r.text}</span>
-            {r.provisoire && <span className="badge-provisoire">À confirmer</span>}
+        {rules.map((r, i) => (
+          <li key={i} className="rule">
+            <strong className="rule-title">{t(r.title)}</strong>
+            <span className="rule-text">{t(r.text)}</span>
+            {r.provisoire && <span className="badge-provisoire">{t(ui.toConfirm)}</span>}
           </li>
         ))}
       </ul>

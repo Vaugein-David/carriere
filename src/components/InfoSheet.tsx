@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import type { InfoItem } from '../types';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { IconClose } from './Icons';
+import { ui, useT } from '../i18n';
 
 interface Props {
   item: InfoItem | null;
@@ -12,6 +13,7 @@ interface Props {
 /** Panneau d'information en bas d'écran (non modal : le plan reste utilisable). */
 export function InfoSheet({ item, onClose }: Props) {
   const reducedMotion = useReducedMotion();
+  const t = useT();
   const [shown, setShown] = useState<InfoItem | null>(item);
   const sheetRef = useRef<HTMLElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -77,15 +79,15 @@ export function InfoSheet({ item, onClose }: Props) {
       <div className="info-sheet__bar" aria-hidden="true" />
       <div className="info-sheet__head">
         <h2 id="info-sheet-title">{shown.title}</h2>
-        <button ref={closeRef} type="button" className="icon-btn" onClick={onClose} aria-label="Fermer le panneau">
+        <button ref={closeRef} type="button" className="icon-btn" onClick={onClose} aria-label={t(ui.close)}>
           <IconClose />
         </button>
       </div>
-      {shown.provisoire && <p className="badge-provisoire">Information à confirmer</p>}
+      {shown.provisoire && <p className="badge-provisoire">{t(ui.infoToConfirm)}</p>}
       {shown.description && <p className="info-sheet__desc">{shown.description}</p>}
       {shown.consigne && (
         <p className="info-sheet__consigne">
-          <strong>Consigne :</strong> {shown.consigne}
+          <strong>{t(ui.instruction)}</strong> {shown.consigne}
         </p>
       )}
     </aside>

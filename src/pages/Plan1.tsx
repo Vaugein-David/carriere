@@ -1,6 +1,11 @@
 import { PlanPage } from '../components/PlanPage';
 import { plan1 } from '../data/plan-1';
+import { LangProvider } from '../i18n';
 
 export default function Plan1() {
-  return <PlanPage data={plan1} eyebrow="Plan 1 · Circulation" />;
+  return (
+    <LangProvider>
+      <PlanPage data={plan1} />
+    </LangProvider>
+  );
 }

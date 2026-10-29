@@ -2,7 +2,12 @@
  * Format des données d'une page de plan (voir src/data/plan-*.ts).
  * Toutes les coordonnées sont exprimées en pixels de l'image d'origine
  * (repère du viewBox "0 0 width height"). Utilisez le mode ?edit pour les relever.
+ *
+ * Les textes sont de type Txt : une chaîne, ou { fr, en, ro, pl } pour les traduire
+ * (une langue absente retombe sur le français).
  */
+
+import type { Txt } from './i18n';
 
 /** Marque une valeur non validée : un badge « À confirmer » s'affiche dans l'interface. */
 interface MaybeProvisional {
@@ -18,35 +23,35 @@ export type HotspotGeometry =
 export type Hotspot = HotspotGeometry &
   MaybeProvisional & {
     id: string;
-    label: string;
-    description: string;
+    label: Txt;
+    description: Txt;
     /** Consigne mise en avant dans le panneau d'info */
-    consigne?: string;
+    consigne?: Txt;
     color: string;
   };
 
 export interface Route {
   id: string;
-  label: string;
+  label: Txt;
   /** Attribut `d` d'un <path> SVG, dans le sens de circulation */
   d: string;
   color: string;
   /** Étapes réparties uniformément le long du tracé */
-  steps: string[];
+  steps: Txt[];
 }
 
 export interface Marker extends MaybeProvisional {
   id: string;
   type: 'assembly' | 'you-are-here';
-  label: string;
+  label: Txt;
   x: number;
   y: number;
-  description?: string;
+  description?: Txt;
 }
 
 export interface Rule extends MaybeProvisional {
-  title: string;
-  text: string;
+  title: Txt;
+  text: Txt;
 }
 
 /** Catégories de couleur des étiquettes de stocks et bâtiments (couleurs dans AnnotationLayer) */
@@ -73,7 +78,7 @@ export type AnnotationShape =
 export type AnnotationArea = AnnotationShape & {
   kind: AreaKind;
   /** Retour à la ligne avec \n */
-  label?: string;
+  label?: Txt;
   /** Texte écrit verticalement */
   vertical?: boolean;
   /** Taille de texte maximale (par défaut : ajustée à la surface) */
@@ -91,14 +96,16 @@ export interface Annotations {
   /** Flèches de sens de circulation (tracé dans le sens de la flèche) */
   arrows?: { d: string; color: string }[];
   /** Textes libres */
-  labels?: { x: number; y: number; text: string; size?: number; anchor?: 'start' | 'middle' | 'end' }[];
+  labels?: { x: number; y: number; text: Txt; size?: number; anchor?: 'start' | 'middle' | 'end' }[];
 }
 
 export interface PlanData {
-  title: string;
-  description: string;
+  /** Petite ligne au-dessus du titre */
+  eyebrow: Txt;
+  title: Txt;
+  description: Txt;
   /** Texte alternatif de l'image */
-  imageAlt: string;
+  imageAlt: Txt;
   /** Photo aérienne du plan */
   image: string;
   /** Mention de source affichée sous le plan (ex. « © IGN ») */
@@ -106,7 +113,7 @@ export interface PlanData {
   /** Étiquettes, flèches et panneaux dessinés par-dessus la photo */
   annotations?: Annotations;
   /** Légende des couleurs affichée sous le plan */
-  legend?: { color: string; label: string }[];
+  legend?: { color: string; label: Txt }[];
   /**
    * Repère des coordonnées (viewBox "0 0 width height").
    * L'image peut être plus grande (ex. 3 fois) tant qu'elle a les mêmes proportions.
@@ -120,7 +127,7 @@ export interface PlanData {
   rules: Rule[];
 }
 
-/** Contenu affiché dans l'InfoSheet */
+/** Contenu affiché dans l'InfoSheet (déjà traduit) */
 export interface InfoItem {
   id: string;
   title: string;
@@ -135,9 +142,18 @@ export interface InfoItem {
  * Mise en forme légère dans les textes : **gras** et [[badge]] (étiquette verte « ← badge »).
  */
 export interface ProcedureData {
-  title: string;
-  description: string;
-  steps: string[];
+  eyebrow: Txt;
+  title: Txt;
+  description: Txt;
+  steps: Txt[];
   /** Encadrés après les étapes (ex. « En cas de problème », « Info ») */
-  notes: { label: string; text: string; tone: 'info' | 'warning'; /** Pictogramme attention avant le titre */ attention?: boolean }[];
+  notes: {
+    label: Txt;
+    text: Txt;
+    tone: 'info' | 'warning';
+    /** Pictogramme attention avant le titre */
+    attention?: boolean;
+    /** Numéro à appeler : affiche un gros bouton d'appel dans l'encadré */
+    tel?: string;
+  }[];
 }

@@ -956,6 +956,58 @@ h1 {
   color: var(--on-yellow);
 }
 
+.procedure-note--warning {
+  background: var(--card);
+}
+
+/* Gros bouton d'appel (encadré « En cas de problème ») */
+.call-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 60px;
+  margin-top: 12px;
+  padding: 10px 16px;
+  border: 2px solid #000;
+  border-radius: 12px;
+  background: #0a7a35;
+  color: #fff;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.call-btn strong {
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Sélecteur de langue */
+.lang-switch {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.lang-switch button {
+  min-width: 48px;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.lang-switch button[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
 /* Sur fond jaune, le triangle reçoit un fond blanc pour rester visible */
 .procedure-note--info .icon-attention path:first-child {
   fill: #fff;

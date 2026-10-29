@@ -1,17 +1,18 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { InfoItem, PlanData } from '../types';
 import { PlanViewer, type PlanViewerHandle } from './PlanViewer';
 import { InfoSheet } from './InfoSheet';
 import { RouteChips, RouteSteps, SafetyRules, ZoneList } from './PageSections';
+import { LangSwitcher, ui, useT, type Txt } from '../i18n';
 
-function toInfo(data: PlanData, id: string): InfoItem | null {
+function toInfo(data: PlanData, id: string, t: (x: Txt) => string): InfoItem | null {
   const h = data.hotspots.find((x) => x.id === id);
   if (h) {
     return {
       id,
-      title: h.label,
-      description: h.description,
-      consigne: h.consigne,
+      title: t(h.label),
+      description: t(h.description),
+      consigne: h.consigne && t(h.consigne),
       color: h.color,
       provisoire: h.provisoire,
     };
@@ -20,8 +21,8 @@ function toInfo(data: PlanData, id: string): InfoItem | null {
   if (m) {
     return {
       id,
-      title: m.label,
-      description: m.description,
+      title: t(m.label),
+      description: m.description && t(m.description),
       color: m.type === 'assembly' ? '#D50000' : '#0057FF',
       provisoire: m.provisoire,
     };
@@ -30,7 +31,8 @@ function toInfo(data: PlanData, id: string): InfoItem | null {
 }
 
 /** Page complète : en-tête, plan interactif, étapes, zones et consignes. */
-export function PlanPage({ data, eyebrow }: { data: PlanData; eyebrow: string }) {
+export function PlanPage({ data }: { data: PlanData }) {
+  const t = useT();
   const params = useMemo(() => new URLSearchParams(window.location.search), []);
   const editMode = params.has('edit');
   const focusId = params.get('focus');
@@ -41,7 +43,11 @@ export function PlanPage({ data, eyebrow }: { data: PlanData; eyebrow: string })
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const route = data.routes.find((r) => r.id === routeId);
-  const info = useMemo(() => (selectedId ? toInfo(data, selectedId) : null), [data, selectedId]);
+  const info = useMemo(() => (selectedId ? toInfo(data, selectedId, t) : null), [data, selectedId, t]);
+
+  useEffect(() => {
+    document.title = `${t(data.title)} — ${t(ui.site)}`;
+  }, [data.title, t]);
 
   const changeRoute = (id: string) => {
     setStep(-1);
@@ -53,7 +59,9 @@ export function PlanPage({ data, eyebrow }: { data: PlanData; eyebrow: string })
     if (!focusId) return;
     if (!viewer.current?.flashMarker(focusId)) {
       viewer.current?.focusItem(focusId);
-      if (toInfo(data, focusId)) setSelectedId(focusId);
+      if (data.hotspots.some((h) => h.id === focusId) || data.markers.some((m) => m.id === focusId)) {
+        setSelectedId(focusId);
+      }
     }
   }, [data, focusId]);
 
@@ -67,9 +75,10 @@ export function PlanPage({ data, eyebrow }: { data: PlanData; eyebrow: string })
   return (
     <>
       <header className="page-header">
-        <p className="eyebrow">{eyebrow}</p>
-        <h1>{data.title}</h1>
-        <p className="lead">{data.description}</p>
+        <LangSwitcher />
+        <p className="eyebrow">{t(data.eyebrow)}</p>
+        <h1>{t(data.title)}</h1>
+        <p className="lead">{t(data.description)}</p>
       </header>
 
       <main className="page-main">
@@ -86,17 +95,21 @@ export function PlanPage({ data, eyebrow }: { data: PlanData; eyebrow: string })
           onReady={onReady}
         />
         {data.legend && (
-          <ul className="legend" aria-label="Légende des couleurs">
+          <ul className="legend" aria-label={t(ui.legend)}>
             {data.legend.map((l) => (
-              <li key={l.label}>
+              <li key={l.color}>
                 <span className="legend-swatch" style={{ background: l.color }} aria-hidden="true" />
-                {l.label}
+                {t(l.label)}
               </li>
             ))}
           </ul>
         )}
-        <p className="viewer-tip">Pincez ou touchez deux fois pour zoomer. Touchez une zone pour plus d'infos.</p>
-        {data.imageCredit && <p className="image-credit">Vue aérienne : {data.imageCredit}</p>}
+        <p className="viewer-tip">{t(ui.tip)}</p>
+        {data.imageCredit && (
+          <p className="image-credit">
+            {t(ui.aerial)} : {data.imageCredit}
+          </p>
+        )}
 
         <div className="sections">
           <div className="sections-col">

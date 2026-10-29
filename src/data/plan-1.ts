@@ -9,6 +9,8 @@ import { plan1Annotations } from './plan-1-annotations';
  * Les positions ont été relevées à l'œil sur le plan fourni : vérifiez-les et
  * ajustez-les avec le mode édition (/carriere/plan-1/?edit).
  *
+ * Textes en 4 langues : { fr, en, ro, pl } (une langue absente retombe sur le français).
+ *
  * Valeurs PLACEHOLDER : tout ce qui porte `provisoire: true` affiche un badge
  * « À confirmer » dans l'interface. Supprimez le drapeau une fois l'info validée.
  */
@@ -22,19 +24,54 @@ const BLANC = '#FFFFFF';
 const ORANGE = '#FF8A00';
 
 export const plan1: PlanData = {
-  title: 'Plan de circulation',
-  description: 'Itinéraires, zones et consignes de la cour. Respectez le sens de circulation.',
-  imageAlt: 'Vue aérienne de la carrière avec les stocks, la trémie, la bascule et les sens de circulation',
+  eyebrow: { fr: 'Plan 1 · Circulation', en: 'Map 1 · Traffic', ro: 'Plan 1 · Circulație', pl: 'Plan 1 · Ruch' },
+  title: { fr: 'Plan de circulation', en: 'Traffic plan', ro: 'Plan de circulație', pl: 'Plan ruchu' },
+  description: {
+    fr: 'Itinéraires, zones et consignes de la cour. Respectez le sens de circulation.',
+    en: 'Routes, areas and rules in the yard. Follow the direction of traffic.',
+    ro: 'Trasee, zone și reguli în incintă. Respectați sensul de circulație.',
+    pl: 'Trasy, strefy i zasady na placu. Przestrzegaj kierunku ruchu.',
+  },
+  imageAlt: {
+    fr: 'Vue aérienne de la carrière avec les stocks, la trémie, la bascule et les sens de circulation',
+    en: 'Aerial view of the quarry with the stockpiles, hopper, weighbridge and traffic directions',
+    ro: 'Imagine aeriană a carierei cu stocurile, buncărul, cântarul și sensurile de circulație',
+    pl: 'Zdjęcie lotnicze kamieniołomu z hałdami, koszem zasypowym, wagą i kierunkami ruchu',
+  },
   // Orthophoto IGN BD ORTHO® (Licence Ouverte Etalab 2.0), recalée sur le plan d'origine
   // (voir sources/recalage-ign-plan-1.json). Image 2883 × 2001 px pour un repère 961 × 667.
   image,
   imageCredit: '© IGN – BD ORTHO®',
   annotations: plan1Annotations,
   legend: [
-    { color: JAUNE, label: 'Circulation dans la cour (entrée)' },
-    { color: BLEU, label: 'Sortie' },
-    { color: VIOLET, label: 'Accès cour après décharge' },
-    { color: VERT, label: 'Accès décharge remblais' },
+    {
+      color: JAUNE,
+      label: {
+        fr: 'Circulation dans la cour (entrée)',
+        en: 'Traffic in the yard (entry)',
+        ro: 'Circulație în incintă (intrare)',
+        pl: 'Ruch na placu (wjazd)',
+      },
+    },
+    { color: BLEU, label: { fr: 'Sortie', en: 'Exit', ro: 'Ieșire', pl: 'Wyjazd' } },
+    {
+      color: VIOLET,
+      label: {
+        fr: 'Accès cour après décharge',
+        en: 'Yard access after tipping',
+        ro: 'Acces în incintă după descărcare',
+        pl: 'Wjazd na plac po rozładunku',
+      },
+    },
+    {
+      color: VERT,
+      label: {
+        fr: 'Accès décharge remblais',
+        en: 'Access to the backfill tip',
+        ro: 'Acces la depozitul de umplutură',
+        pl: 'Dojazd do składowiska nasypu',
+      },
+    },
   ],
   width: 961,
   height: 667,
@@ -42,78 +79,159 @@ export const plan1: PlanData = {
   hotspots: [
     {
       id: 'tremie',
-      label: 'Trémie (poste de chargement)',
-      description:
-        'Chargement en libre-service par badge. Présentez votre badge sur le premier boîtier avant la trémie, sur votre gauche.',
-      consigne: 'Marche avant uniquement sous la trémie. Avancez au feu vert et à l’alarme.',
+      label: { fr: 'Trémie (poste de chargement)', en: 'Hopper (loading point)', ro: 'Buncăr (punct de încărcare)', pl: 'Kosz zasypowy (punkt załadunku)' },
+      description: {
+        fr: 'Chargement en libre-service par badge. Scannez le QR code présent sur le boîtier de la trémie pour son fonctionnement.',
+        en: 'Self-service loading with a badge. Scan the QR code on the hopper control box to see how it works.',
+        ro: 'Încărcare în regim self-service cu ecusonul. Scanați codul QR de pe cutia buncărului pentru instrucțiunile de funcționare.',
+        pl: 'Samoobsługowy załadunek na identyfikator. Zeskanuj kod QR na skrzynce kosza, aby zobaczyć instrukcję obsługi.',
+      },
+      consigne: {
+        fr: 'Marche avant uniquement sous la trémie. Devant la trémie : un camion en chargement et un seul en attente.',
+        en: 'Drive forwards only under the hopper. At the hopper: one truck loading and only one waiting.',
+        ro: 'Sub buncăr circulați doar cu mersul înainte. La buncăr: un camion la încărcare și doar unul în așteptare.',
+        pl: 'Pod koszem jedź wyłącznie przodem. Przy koszu: jedna ciężarówka w trakcie załadunku i tylko jedna oczekująca.',
+      },
       shape: 'circle',
       coords: [183, 191, 26],
       color: JAUNE,
     },
     {
       id: 'attente-tremie',
-      label: 'Zone d’attente trémie',
-      description: 'L’attente pour la trémie se fait le long du parking à engins.',
-      consigne: 'Ne stationnez pas sur la piste : attendez votre tour dans la zone jaune.',
+      label: { fr: 'Zone d’attente trémie', en: 'Hopper waiting area', ro: 'Zonă de așteptare la buncăr', pl: 'Strefa oczekiwania do kosza' },
+      description: {
+        fr: 'La file d’attente pour la trémie se fait le long du parking engins.',
+        en: 'The queue for the hopper forms along the plant parking area.',
+        ro: 'Coada pentru buncăr se formează de-a lungul parcării utilajelor.',
+        pl: 'Kolejka do kosza ustawia się wzdłuż parkingu maszyn.',
+      },
+      consigne: {
+        fr: 'Laissez libre la sortie du parking engins. Devant la trémie : un camion en chargement et un seul en attente.',
+        en: 'Keep the plant parking exit clear. At the hopper: one truck loading and only one waiting.',
+        ro: 'Lăsați liberă ieșirea din parcarea utilajelor. La buncăr: un camion la încărcare și doar unul în așteptare.',
+        pl: 'Nie blokuj wyjazdu z parkingu maszyn. Przy koszu: jedna ciężarówka w trakcie załadunku i tylko jedna oczekująca.',
+      },
       shape: 'polygon',
       coords: [164, 73, 182, 84, 136, 160, 119, 149],
       color: JAUNE,
     },
     {
       id: 'bascule',
-      label: 'Bascule N°2',
-      description: 'Pesée des camions à l’entrée et à la sortie du site.',
-      consigne: 'Arrêt complet sur la bascule. Suivez les indications du ou de la responsable de bascule.',
+      label: { fr: 'Bascule N°2', en: 'Weighbridge no. 2', ro: 'Cântarul nr. 2', pl: 'Waga nr 2' },
+      description: {
+        fr: 'Bascule d’entrée et de sortie : pesée des camions à l’arrivée et au départ.',
+        en: 'Entry and exit weighbridge: trucks are weighed on arrival and on departure.',
+        ro: 'Cântar de intrare și de ieșire: camioanele se cântăresc la sosire și la plecare.',
+        pl: 'Waga wjazdowa i wyjazdowa: ciężarówki są ważone przy wjeździe i przy wyjeździe.',
+      },
+      consigne: {
+        fr: 'Le bâchage s’effectue après être passé en bascule de sortie.',
+        en: 'Sheet (tarp) your load only after the exit weighbridge.',
+        ro: 'Acoperirea cu prelată se face după trecerea pe cântarul de ieșire.',
+        pl: 'Plandekowanie ładunku odbywa się po przejechaniu przez wagę wyjazdową.',
+      },
       shape: 'polygon',
       coords: [886, 308, 922, 308, 922, 398, 886, 398],
       color: BLANC,
     },
     {
       id: 'laveur',
-      label: 'Laveur de roues',
-      description: 'Passage au laveur avant la sortie du site.',
+      label: { fr: 'Laveur de roues', en: 'Wheel wash', ro: 'Spălătorie de roți', pl: 'Myjnia kół' },
+      description: {
+        fr: 'Passage au laveur de roues avant la bascule de sortie.',
+        en: 'Go through the wheel wash before the exit weighbridge.',
+        ro: 'Treceți prin spălătoria de roți înainte de cântarul de ieșire.',
+        pl: 'Przejedź przez myjnię kół przed wagą wyjazdową.',
+      },
+      consigne: {
+        fr: 'Passage OBLIGATOIRE dans le laveur de roues.',
+        en: 'The wheel wash is MANDATORY.',
+        ro: 'Trecerea prin spălătoria de roți este OBLIGATORIE.',
+        pl: 'Przejazd przez myjnię kół jest OBOWIĄZKOWY.',
+      },
       shape: 'polygon',
       coords: [886, 252, 922, 252, 922, 302, 886, 302],
       color: BLANC,
     },
     {
-      id: 'parking-pl',
-      label: 'Parking PL',
-      description: 'Stationnement des poids lourds.',
+      id: 'parking-engins',
+      label: { fr: 'Parking engins', en: 'Plant parking', ro: 'Parcarea utilajelor', pl: 'Parking maszyn' },
+      description: {
+        fr: 'Stationnement des engins de la carrière.',
+        en: 'Parking for the quarry plant and machinery.',
+        ro: 'Parcare pentru utilajele carierei.',
+        pl: 'Parking dla maszyn kamieniołomu.',
+      },
+      consigne: {
+        fr: 'Laissez toujours libre la sortie du parking engins.',
+        en: 'Always keep the plant parking exit clear.',
+        ro: 'Lăsați întotdeauna liberă ieșirea din parcarea utilajelor.',
+        pl: 'Zawsze pozostaw wolny wyjazd z parkingu maszyn.',
+      },
       shape: 'polygon',
       coords: [101, 76, 137, 76, 152, 86, 118, 148, 106, 162, 96, 182, 94, 209, 49, 209, 40, 156, 93, 157, 94, 136, 100, 134],
       color: BLANC,
     },
     {
       id: 'parking-vl',
-      label: 'Parking VL et réfectoire',
-      description: 'Stationnement des véhicules légers. Le réfectoire se trouve entre les deux parkings.',
+      label: { fr: 'Parking VL et réfectoire', en: 'Car park and canteen', ro: 'Parcare autoturisme și cantină', pl: 'Parking osobowy i stołówka' },
+      description: {
+        fr: 'Stationnement des véhicules légers. Le réfectoire se trouve entre les deux parkings.',
+        en: 'Parking for cars and vans. The canteen is between the two parking areas.',
+        ro: 'Parcare pentru autoturisme. Cantina se află între cele două parcări.',
+        pl: 'Parking dla samochodów osobowych. Stołówka znajduje się między dwoma parkingami.',
+      },
       shape: 'polygon',
       coords: [40, 79, 93, 79, 93, 149, 40, 149],
       color: BLANC,
     },
     {
       id: 'centrale-beton',
-      label: 'Centrale à béton',
-      description: 'Zone de la centrale à béton.',
-      consigne: 'Accès interdit sans autorisation.',
+      label: { fr: 'Centrale à béton', en: 'Concrete plant', ro: 'Stație de betoane', pl: 'Betoniarnia' },
+      description: {
+        fr: 'Zone de la centrale à béton.',
+        en: 'Concrete plant area.',
+        ro: 'Zona stației de betoane.',
+        pl: 'Teren betoniarni.',
+      },
+      consigne: {
+        fr: 'Accès interdit sans autorisation.',
+        en: 'No entry without authorisation.',
+        ro: 'Accesul interzis fără autorizație.',
+        pl: 'Wstęp wzbroniony bez zezwolenia.',
+      },
       shape: 'polygon',
       coords: [572, 128, 610, 100, 662, 106, 668, 140, 646, 158, 600, 160],
       color: ORANGE,
     },
     {
       id: 'poste-commande',
-      label: 'Poste de commande',
-      description: 'Poste de pilotage de l’installation.',
+      label: { fr: 'Poste de commande', en: 'Control room', ro: 'Camera de comandă', pl: 'Sterownia' },
+      description: {
+        fr: 'Poste de pilotage de l’installation.',
+        en: 'Control room for the processing plant.',
+        ro: 'Camera de comandă a instalației.',
+        pl: 'Sterownia instalacji.',
+      },
       shape: 'polygon',
       coords: [577, 194, 606, 194, 606, 276, 577, 276],
       color: ORANGE,
     },
     {
       id: 'concassage',
-      label: 'Installation de concassage',
-      description: 'Concasseurs, cribles et convoyeurs de l’installation de traitement.',
-      consigne: 'Accès interdit aux camions. Ne stationnez jamais sous un convoyeur.',
+      label: { fr: 'Installation de concassage', en: 'Crushing plant', ro: 'Instalația de concasare', pl: 'Instalacja kruszenia' },
+      description: {
+        fr: 'Concasseurs, cribles et convoyeurs de l’installation de traitement.',
+        en: 'Crushers, screens and conveyors of the processing plant.',
+        ro: 'Concasoare, ciururi și benzi transportoare ale instalației de prelucrare.',
+        pl: 'Kruszarki, przesiewacze i przenośniki instalacji przeróbczej.',
+      },
+      consigne: {
+        fr: 'Accès interdit aux camions. Ne stationnez jamais sous un convoyeur.',
+        en: 'No entry for trucks. Never park under a conveyor.',
+        ro: 'Accesul camioanelor interzis. Nu staționați niciodată sub o bandă transportoare.',
+        pl: 'Zakaz wjazdu ciężarówek. Nigdy nie parkuj pod przenośnikiem.',
+      },
       shape: 'polygon',
       coords: [462, 298, 616, 298, 700, 280, 716, 316, 630, 374, 462, 374],
       color: ORANGE,
@@ -121,18 +239,32 @@ export const plan1: PlanData = {
     },
     {
       id: 'usines-boues',
-      label: 'Usines à boues',
-      description: 'Installation de traitement des boues.',
-      consigne: 'Zone interdite à la circulation des camions.',
+      label: { fr: 'Usines à boues', en: 'Sludge plant', ro: 'Stația de tratare a nămolului', pl: 'Instalacja szlamu' },
+      description: {
+        fr: 'Installation de traitement des boues.',
+        en: 'Sludge treatment plant.',
+        ro: 'Instalație de tratare a nămolului.',
+        pl: 'Instalacja oczyszczania szlamu.',
+      },
+      consigne: {
+        fr: 'Zone interdite à la circulation des camions.',
+        en: 'No trucks allowed in this area.',
+        ro: 'Zonă interzisă circulației camioanelor.',
+        pl: 'Strefa zamknięta dla ruchu ciężarówek.',
+      },
       shape: 'polygon',
       coords: [710, 330, 821, 330, 821, 433, 710, 433],
       color: ROUGE,
     },
     {
       id: 'decharge-remblais',
-      label: 'Décharge remblais',
-      description:
-        'Accès à la décharge de remblais par la voie verte, le long de la bascule. Après la décharge, l’accès à la cour se fait par la piste basse (flèche violette).',
+      label: { fr: 'Décharge remblais', en: 'Backfill tip', ro: 'Depozit de umplutură', pl: 'Składowisko nasypu' },
+      description: {
+        fr: 'Accès à la décharge de remblais par la voie verte, le long de la bascule. Après la décharge, l’accès à la cour se fait par la piste basse (flèche violette).',
+        en: 'The backfill tip is reached by the green lane, alongside the weighbridge. After tipping, return to the yard by the lower track (purple arrow).',
+        ro: 'La depozitul de umplutură se ajunge pe culoarul verde, de-a lungul cântarului. După descărcare, intrați în incintă pe pista de jos (săgeata mov).',
+        pl: 'Do składowiska nasypu dojeżdża się zielonym pasem wzdłuż wagi. Po rozładunku wjazd na plac dolną drogą (fioletowa strzałka).',
+      },
       shape: 'polygon',
       coords: [678, 619, 838, 619, 838, 652, 678, 652],
       color: VIOLET,
@@ -142,52 +274,148 @@ export const plan1: PlanData = {
   routes: [
     {
       id: 'chargement',
-      label: 'Entrée → Trémie',
+      label: { fr: 'Accès cour et trémie', en: 'Yard and hopper access', ro: 'Acces în incintă și la buncăr', pl: 'Wjazd na plac i do kosza' },
       color: JAUNE,
-      d: 'M 862 667 C 875 600 895 520 903 450 C 908 400 912 330 911 250 L 908 120 C 907 90 887 58 845 58 L 260 64 C 222 66 194 80 170 106 C 148 132 134 165 132 195 C 131 225 148 250 172 260 C 182 264 184 250 184 235 L 184 196',
+      // Part de la bascule d'entrée
+      d: 'M 908 398 C 911 350 912 300 911 250 L 908 120 C 907 90 887 58 845 58 L 260 64 C 222 66 194 80 170 106 C 148 132 134 165 132 195 C 131 225 148 250 172 260 C 182 264 184 250 184 235 L 184 196',
       steps: [
-        'Entrée par la piste d’accès (est)',
-        'Passage à la Bascule N°2',
-        'Remontée le long de la clôture',
-        'Piste du haut vers l’ouest (flèches jaunes)',
-        'Attente le long du parking à engins',
-        'Sous la trémie, en marche avant uniquement',
+        {
+          fr: 'Pesée à la bascule d’entrée',
+          en: 'Weigh in at the entry weighbridge',
+          ro: 'Cântărire la cântarul de intrare',
+          pl: 'Ważenie na wadze wjazdowej',
+        },
+        {
+          fr: 'Après la bascule, prendre la piste de gauche pour descendre dans la cour',
+          en: 'After the weighbridge, take the left-hand track down into the yard',
+          ro: 'După cântar, luați pista din stânga pentru a coborî în incintă',
+          pl: 'Za wagą skręć w lewą drogę, aby zjechać na plac',
+        },
+        {
+          fr: 'Suivre les indications du plan (flèches jaunes)',
+          en: 'Follow the directions on the map (yellow arrows)',
+          ro: 'Urmați indicațiile de pe plan (săgețile galbene)',
+          pl: 'Kieruj się oznaczeniami na planie (żółte strzałki)',
+        },
+        {
+          fr: 'File d’attente le long du parking engins, sortie du parking laissée libre',
+          en: 'Queue along the plant parking, keeping its exit clear',
+          ro: 'Așteptați la coadă de-a lungul parcării utilajelor, lăsând ieșirea liberă',
+          pl: 'Ustaw się w kolejce wzdłuż parkingu maszyn, nie blokując wyjazdu',
+        },
+        {
+          fr: 'Devant la trémie : un camion en chargement et un seul en attente',
+          en: 'At the hopper: one truck loading and only one waiting',
+          ro: 'La buncăr: un camion la încărcare și doar unul în așteptare',
+          pl: 'Przy koszu: jedna ciężarówka w załadunku i tylko jedna oczekująca',
+        },
+        {
+          fr: 'Sous la trémie en marche avant : scanner le QR code du boîtier pour son fonctionnement',
+          en: 'Drive forwards under the hopper and scan the QR code on the control box for instructions',
+          ro: 'Intrați cu mersul înainte sub buncăr și scanați codul QR de pe cutie pentru instrucțiuni',
+          pl: 'Wjedź przodem pod kosz i zeskanuj kod QR na skrzynce, aby zobaczyć instrukcję',
+        },
       ],
     },
     {
       id: 'sortie',
-      label: 'Trémie → Sortie',
+      label: { fr: 'Trémie → Sortie', en: 'Hopper → Exit', ro: 'Buncăr → Ieșire', pl: 'Kosz → Wyjazd' },
       color: BLEU,
       d: 'M 182 196 L 182 130 C 183 108 190 94 208 82 C 224 75 240 74 262 74 L 845 68 C 878 70 900 90 900 122 L 903 250 C 904 330 901 400 896 450 C 889 520 870 600 856 667',
       steps: [
-        'Quitter la trémie en marche avant',
-        'Rejoindre la piste du haut',
-        'Piste du haut vers l’est (flèches bleues)',
-        'Descente le long de la clôture, passage au laveur',
-        'Pesée à la Bascule N°2',
-        'Sortie du site',
+        {
+          fr: 'Quitter la trémie en marche avant',
+          en: 'Leave the hopper driving forwards',
+          ro: 'Ieșiți de sub buncăr cu mersul înainte',
+          pl: 'Wyjedź spod kosza przodem',
+        },
+        {
+          fr: 'Reprendre la même piste pour remonter à la bascule de sortie',
+          en: 'Take the same track back up to the exit weighbridge',
+          ro: 'Reluați aceeași pistă pentru a urca la cântarul de ieșire',
+          pl: 'Wróć tą samą drogą do wagi wyjazdowej',
+        },
+        {
+          fr: 'Passage OBLIGATOIRE dans le laveur de roues',
+          en: 'MANDATORY pass through the wheel wash',
+          ro: 'Trecere OBLIGATORIE prin spălătoria de roți',
+          pl: 'OBOWIĄZKOWY przejazd przez myjnię kół',
+        },
+        {
+          fr: 'Pesée à la bascule de sortie',
+          en: 'Weigh out at the exit weighbridge',
+          ro: 'Cântărire la cântarul de ieșire',
+          pl: 'Ważenie na wadze wyjazdowej',
+        },
+        {
+          fr: 'Bâchage après la bascule de sortie',
+          en: 'Sheet (tarp) the load after the exit weighbridge',
+          ro: 'Acoperiți încărcătura cu prelata după cântarul de ieșire',
+          pl: 'Plandekowanie ładunku za wagą wyjazdową',
+        },
+        { fr: 'Sortie du site', en: 'Leave the site', ro: 'Ieșirea din carieră', pl: 'Wyjazd z terenu' },
       ],
     },
     {
       id: 'acces-decharge',
-      label: 'Accès décharge remblais',
+      label: {
+        fr: 'Accès décharge remblais',
+        en: 'Access to the backfill tip',
+        ro: 'Acces la depozitul de umplutură',
+        pl: 'Dojazd do składowiska nasypu',
+      },
       color: VERT,
       d: 'M 905 240 C 888 262 881 290 881 320 C 882 380 882 440 880 490 C 878 540 872 600 868 667',
       steps: [
-        'Depuis la cour, prendre la voie verte le long de la bascule',
-        'Descendre par la piste d’accès',
-        'Continuer vers la décharge remblais',
+        {
+          fr: 'Depuis la cour, prendre la voie verte le long de la bascule',
+          en: 'From the yard, take the green lane alongside the weighbridge',
+          ro: 'Din incintă, luați culoarul verde de-a lungul cântarului',
+          pl: 'Z placu jedź zielonym pasem wzdłuż wagi',
+        },
+        {
+          fr: 'Descendre par la piste d’accès',
+          en: 'Drive down the access track',
+          ro: 'Coborâți pe pista de acces',
+          pl: 'Zjedź drogą dojazdową',
+        },
+        {
+          fr: 'Continuer vers la décharge remblais',
+          en: 'Continue to the backfill tip',
+          ro: 'Continuați spre depozitul de umplutură',
+          pl: 'Jedź dalej do składowiska nasypu',
+        },
       ],
     },
     {
       id: 'retour-cour',
-      label: 'Accès cour après décharge',
+      label: {
+        fr: 'Accès cour après décharge',
+        en: 'Yard access after tipping',
+        ro: 'Acces în incintă după descărcare',
+        pl: 'Wjazd na plac po rozładunku',
+      },
       color: VIOLET,
       d: 'M 846 667 C 852 610 864 540 878 494 C 882 476 874 462 845 458 C 800 452 720 451 640 451 L 566 448',
       steps: [
-        'Retour de la décharge remblais par la piste d’accès',
-        'Bifurquer avant la bascule (flèche violette)',
-        'Piste basse vers l’ouest jusqu’à la cour',
+        {
+          fr: 'Retour de la décharge remblais par la piste d’accès',
+          en: 'Come back from the backfill tip by the access track',
+          ro: 'Întoarceți-vă de la depozitul de umplutură pe pista de acces',
+          pl: 'Wróć ze składowiska nasypu drogą dojazdową',
+        },
+        {
+          fr: 'Bifurquer avant la bascule (flèche violette)',
+          en: 'Turn off before the weighbridge (purple arrow)',
+          ro: 'Virați înainte de cântar (săgeata mov)',
+          pl: 'Skręć przed wagą (fioletowa strzałka)',
+        },
+        {
+          fr: 'Piste basse vers l’ouest jusqu’à la cour',
+          en: 'Follow the lower track west to the yard',
+          ro: 'Urmați pista de jos spre vest până în incintă',
+          pl: 'Jedź dolną drogą na zachód aż do placu',
+        },
       ],
     },
   ],
@@ -197,41 +425,95 @@ export const plan1: PlanData = {
     {
       id: 'vous-etes-ici',
       type: 'you-are-here',
-      label: 'Vous êtes ici',
+      label: { fr: 'Vous êtes ici', en: 'You are here', ro: 'Sunteți aici', pl: 'Jesteś tutaj' },
       x: 872,
       y: 618,
-      description: 'Entrée du site.',
+      description: { fr: 'Entrée du site.', en: 'Site entrance.', ro: 'Intrarea în carieră.', pl: 'Wjazd na teren.' },
       provisoire: true, // PLACEHOLDER : position du QR code à confirmer
     },
   ],
 
   rules: [
     {
-      title: 'Sens de circulation',
-      text: 'Suivez les flèches : jaune pour entrer dans la cour, bleu pour sortir, vert pour aller à la décharge remblais, violet pour revenir dans la cour après décharge.',
+      title: { fr: 'Accès à la cour', en: 'Getting into the yard', ro: 'Accesul în incintă', pl: 'Wjazd na plac' },
+      text: {
+        fr: 'Pour descendre dans la cour, prendre la piste de gauche après la bascule d’entrée, puis suivre les indications du plan pour accéder aux différentes parties de la cour et à la trémie.',
+        en: 'To get down into the yard, take the left-hand track after the entry weighbridge, then follow the directions on the map to reach the different parts of the yard and the hopper.',
+        ro: 'Pentru a coborî în incintă, luați pista din stânga după cântarul de intrare, apoi urmați indicațiile de pe plan pentru a ajunge în diferitele zone ale incintei și la buncăr.',
+        pl: 'Aby zjechać na plac, za wagą wjazdową skręć w lewą drogę, a następnie kieruj się oznaczeniami na planie do poszczególnych części placu i do kosza.',
+      },
     },
     {
-      title: 'Zones interdites',
-      text: 'Ne franchissez jamais un panneau sens interdit (rond rouge sur le plan).',
+      title: { fr: 'Sens de circulation', en: 'Direction of traffic', ro: 'Sensul de circulație', pl: 'Kierunek ruchu' },
+      text: {
+        fr: 'Suivez les flèches : jaune pour entrer dans la cour, bleu pour sortir, vert pour aller à la décharge remblais, violet pour revenir dans la cour après décharge.',
+        en: 'Follow the arrows: yellow to enter the yard, blue to leave, green to go to the backfill tip, purple to come back into the yard after tipping.',
+        ro: 'Urmați săgețile: galben pentru intrarea în incintă, albastru pentru ieșire, verde pentru depozitul de umplutură, mov pentru revenirea în incintă după descărcare.',
+        pl: 'Kieruj się strzałkami: żółte – wjazd na plac, niebieskie – wyjazd, zielone – dojazd do składowiska nasypu, fioletowe – powrót na plac po rozładunku.',
+      },
     },
     {
-      title: 'Vitesse limitée',
-      text: '20 km/h maximum dans tout le site.', // PLACEHOLDER : limite à confirmer
-      provisoire: true,
+      title: { fr: 'Fonctionnement de la trémie', en: 'Using the hopper', ro: 'Funcționarea buncărului', pl: 'Obsługa kosza zasypowego' },
+      text: {
+        fr: 'Scannez le QR code présent sur le boîtier de la trémie pour son fonctionnement.',
+        en: 'Scan the QR code on the hopper control box to see how it works.',
+        ro: 'Scanați codul QR de pe cutia buncărului pentru instrucțiunile de funcționare.',
+        pl: 'Zeskanuj kod QR na skrzynce kosza, aby zobaczyć instrukcję obsługi.',
+      },
     },
     {
-      title: 'Priorité aux engins',
-      text: 'Les chargeurs et engins de carrière sont toujours prioritaires. Restez hors de leur champ d’action.',
-      provisoire: true, // PLACEHOLDER : règle de priorité à valider
+      title: { fr: 'Attente trémie', en: 'Waiting for the hopper', ro: 'Așteptarea la buncăr', pl: 'Oczekiwanie do kosza' },
+      text: {
+        fr: 'La file d’attente pour la trémie se fait le long du parking engins (laisser libre la sortie du parking engins). Devant la trémie : un camion en cours de chargement plus un en attente uniquement.',
+        en: 'The queue for the hopper forms along the plant parking (keep the plant parking exit clear). At the hopper: one truck loading plus only one waiting.',
+        ro: 'Coada pentru buncăr se formează de-a lungul parcării utilajelor (lăsați liberă ieșirea din parcarea utilajelor). La buncăr: un camion la încărcare plus doar unul în așteptare.',
+        pl: 'Kolejka do kosza ustawia się wzdłuż parkingu maszyn (nie blokuj wyjazdu z parkingu maszyn). Przy koszu: jedna ciężarówka w trakcie załadunku i tylko jedna oczekująca.',
+      },
     },
     {
-      title: 'EPI obligatoires',
-      text: 'Hors de la cabine : gilet haute visibilité, chaussures de sécurité et casque.',
-      provisoire: true, // PLACEHOLDER : liste des EPI à valider
+      title: { fr: 'Sortie', en: 'Leaving the site', ro: 'Ieșirea', pl: 'Wyjazd' },
+      text: {
+        fr: 'Reprendre la même piste pour remonter à la bascule de sortie. Le passage dans le laveur de roues est OBLIGATOIRE. Le bâchage s’effectue après être passé en bascule de sortie.',
+        en: 'Take the same track back up to the exit weighbridge. The wheel wash is MANDATORY. Sheet (tarp) your load only after the exit weighbridge.',
+        ro: 'Reluați aceeași pistă pentru a urca la cântarul de ieșire. Trecerea prin spălătoria de roți este OBLIGATORIE. Acoperirea cu prelată se face după cântarul de ieșire.',
+        pl: 'Wróć tą samą drogą do wagi wyjazdowej. Przejazd przez myjnię kół jest OBOWIĄZKOWY. Plandekowanie ładunku odbywa się dopiero za wagą wyjazdową.',
+      },
     },
     {
-      title: 'Attente trémie',
-      text: 'L’attente pour la trémie se fait le long du parking à engins, jamais sur la piste.',
+      title: { fr: 'Zones interdites', en: 'No-entry areas', ro: 'Zone interzise', pl: 'Strefy zakazane' },
+      text: {
+        fr: 'Ne franchissez jamais un panneau sens interdit (rond rouge sur le plan).',
+        en: 'Never pass a no-entry sign (red circle on the map).',
+        ro: 'Nu treceți niciodată de un indicator de acces interzis (cercul roșu de pe plan).',
+        pl: 'Nigdy nie mijaj znaku zakazu wjazdu (czerwone koło na planie).',
+      },
+    },
+    {
+      title: { fr: 'Vitesse limitée', en: 'Speed limit', ro: 'Limită de viteză', pl: 'Ograniczenie prędkości' },
+      text: {
+        fr: '30 km/h maximum dans la carrière.',
+        en: '30 km/h maximum in the quarry.',
+        ro: 'Maximum 30 km/h în carieră.',
+        pl: 'Maksymalnie 30 km/h na terenie kamieniołomu.',
+      },
+    },
+    {
+      title: { fr: 'Priorité aux engins', en: 'Plant has priority', ro: 'Prioritate pentru utilaje', pl: 'Pierwszeństwo maszyn' },
+      text: {
+        fr: 'Les chargeurs et engins de carrière sont toujours prioritaires. Restez hors de leur champ d’action.',
+        en: 'Loaders and quarry plant always have priority. Stay out of their working area.',
+        ro: 'Încărcătoarele și utilajele carierei au întotdeauna prioritate. Rămâneți în afara razei lor de acțiune.',
+        pl: 'Ładowarki i maszyny kamieniołomu mają zawsze pierwszeństwo. Trzymaj się poza ich strefą pracy.',
+      },
+    },
+    {
+      title: { fr: 'EPI obligatoires', en: 'Mandatory PPE', ro: 'EIP obligatoriu', pl: 'Obowiązkowe ŚOI' },
+      text: {
+        fr: 'Hors de la cabine : gilet haute visibilité, chaussures de sécurité et casque.',
+        en: 'Outside the cab: high-visibility vest, safety shoes and helmet.',
+        ro: 'În afara cabinei: vestă reflectorizantă, încălțăminte de protecție și cască.',
+        pl: 'Poza kabiną: kamizelka odblaskowa, obuwie ochronne i kask.',
+      },
     },
   ],
 };

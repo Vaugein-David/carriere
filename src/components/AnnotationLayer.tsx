@@ -2,6 +2,7 @@ import { memo } from 'react';
 import type { AnnotationArea, Annotations, AreaKind } from '../types';
 import { pairs, pointsAttr } from '../lib/geometry';
 import { inkOn } from '../lib/color';
+import { useT } from '../i18n';
 
 const AREA: Record<AreaKind, string> = {
   stock: '#FFF6BF',
@@ -32,9 +33,10 @@ function bbox(area: AnnotationArea) {
 }
 
 function AreaLabel({ area, fill }: { area: AnnotationArea; fill: string }) {
+  const t = useT();
   if (!area.label) return null;
   const { x, y, w, h } = bbox(area);
-  const lines = area.label.split('\n');
+  const lines = t(area.label).split('\n');
   const longest = Math.max(...lines.map((l) => l.length));
   // Taille ajustée à la surface (en sens de lecture), plafonnée
   const along = area.vertical ? h : w;
@@ -75,6 +77,7 @@ function AreaShape({ area, ...rest }: { area: AnnotationArea; className: string;
 
 /** Annotations posées sur la photo : étiquettes des stocks, flèches de sens, sens interdits, textes. */
 export const AnnotationLayer = memo(function AnnotationLayer({ annotations }: { annotations: Annotations }) {
+  const t = useT();
   const { areas, noEntry, labels = [], arrows = [] } = annotations;
   const arrowColors = [...new Set(arrows.map((a) => a.color))];
   return (
@@ -133,7 +136,7 @@ export const AnnotationLayer = memo(function AnnotationLayer({ annotations }: { 
 
       {labels.map((l, i) => (
         <text key={i} className="annot-text" x={l.x} y={l.y} fontSize={l.size ?? 12} textAnchor={l.anchor ?? 'middle'}>
-          {l.text}
+          {t(l.text)}
         </text>
       ))}
     </g>

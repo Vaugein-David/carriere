@@ -1,6 +1,7 @@
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import type { ProcedureData } from '../types';
-import { IconAttention } from './Icons';
+import { IconAttention, IconPhone } from './Icons';
+import { LangSwitcher, ui, useT } from '../i18n';
 
 /** Mise en forme légère : **gras** et [[badge]] (étiquette verte de l'affiche) */
 function RichText({ text }: { text: string }) {
@@ -26,15 +27,22 @@ function RichText({ text }: { text: string }) {
 }
 
 /** Page simple : retranscription d'une affiche, étape par étape. */
-export function ProcedurePage({ data, eyebrow }: { data: ProcedureData; eyebrow: string }) {
+export function ProcedurePage({ data }: { data: ProcedureData }) {
+  const t = useT();
+
+  useEffect(() => {
+    document.title = `${t(data.title).replace(/\*\*/g, '')} — ${t(ui.site)}`;
+  }, [data.title, t]);
+
   return (
     <>
       <header className="page-header page-header--poster">
-        <p className="eyebrow">{eyebrow}</p>
+        <LangSwitcher />
+        <p className="eyebrow">{t(data.eyebrow)}</p>
         <h1>
-          <RichText text={data.title} />
+          <RichText text={t(data.title)} />
         </h1>
-        <p className="lead">{data.description}</p>
+        <p className="lead">{t(data.description)}</p>
       </header>
 
       <main className="page-main procedure">
@@ -45,24 +53,34 @@ export function ProcedurePage({ data, eyebrow }: { data: ProcedureData; eyebrow:
                 {i + 1}
               </span>
               <div>
-                <h2 className="procedure-step-title">Étape {i + 1}</h2>
+                <h2 className="procedure-step-title">
+                  {t(ui.step)} {i + 1}
+                </h2>
                 <p className="procedure-step-text">
-                  <RichText text={step} />
+                  <RichText text={t(step)} />
                 </p>
               </div>
             </li>
           ))}
         </ol>
 
-        {data.notes.map((n) => (
-          <section key={n.label} className={`procedure-note procedure-note--${n.tone}`} aria-label={n.label}>
+        {data.notes.map((n, i) => (
+          <section key={i} className={`procedure-note procedure-note--${n.tone}`} aria-label={t(n.label)}>
             <h2>
               {n.attention && <IconAttention />}
-              {n.label}
+              {t(n.label)}
             </h2>
             <p>
-              <RichText text={n.text} />
+              <RichText text={t(n.text)} />
             </p>
+            {n.tel && (
+              <a className="call-btn" href={`tel:${n.tel.replace(/[^\d+]/g, '')}`}>
+                <IconPhone />
+                <span>
+                  {t(ui.call)} <strong>{n.tel}</strong>
+                </span>
+              </a>
+            )}
           </section>
         ))}
       </main>

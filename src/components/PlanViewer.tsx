@@ -21,6 +21,7 @@ import { RouteLayer } from './RouteLayer';
 import { AnnotationLayer } from './AnnotationLayer';
 import { EditOverlay, EditPanel, editTap, initialEditState, type EditState } from './EditTools';
 import { IconMinus, IconPlus, IconRecenter } from './Icons';
+import { ui, useT } from '../i18n';
 
 gsap.registerPlugin(useGSAP);
 
@@ -56,6 +57,7 @@ export function PlanViewer({
   const { width, height } = data;
   const u = drawUnit(width, height);
   const reducedMotion = useReducedMotion();
+  const t = useT();
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -223,7 +225,7 @@ export function PlanViewer({
         style={{ '--ratio': height / width } as CSSProperties}
         tabIndex={0}
         role="group"
-        aria-label={`${data.imageAlt}. Pincez ou utilisez les touches plus et moins pour zoomer, les flèches pour déplacer, 0 pour recentrer.`}
+        aria-label={`${t(data.imageAlt)}. ${t(ui.viewerHelp)}`}
         onKeyDown={onKeyDown}
       >
         <div ref={contentRef} className="viewer-content" style={{ width, height }}>
@@ -267,7 +269,7 @@ export function PlanViewer({
           </svg>
         </div>
 
-        {!loaded && <p className="viewer-loading">Chargement du plan…</p>}
+        {!loaded && <p className="viewer-loading">{t(ui.loading)}</p>}
 
 
         {editMode && (
@@ -277,13 +279,13 @@ export function PlanViewer({
         )}
 
         <div className="viewer-controls" data-no-pan>
-          <button type="button" className="map-btn" onClick={() => api.zoomBy(1.6)} aria-label="Zoomer">
+          <button type="button" className="map-btn" onClick={() => api.zoomBy(1.6)} aria-label={t(ui.zoomIn)}>
             <IconPlus />
           </button>
-          <button type="button" className="map-btn" onClick={() => api.zoomBy(1 / 1.6)} aria-label="Dézoomer">
+          <button type="button" className="map-btn" onClick={() => api.zoomBy(1 / 1.6)} aria-label={t(ui.zoomOut)}>
             <IconMinus />
           </button>
-          <button type="button" className="map-btn" onClick={() => api.recenter()} aria-label="Recentrer le plan">
+          <button type="button" className="map-btn" onClick={() => api.recenter()} aria-label={t(ui.recenter)}>
             <IconRecenter />
           </button>
         </div>

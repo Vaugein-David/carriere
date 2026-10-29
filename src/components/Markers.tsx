@@ -1,5 +1,6 @@
 import type { KeyboardEvent } from 'react';
 import type { Marker } from '../types';
+import { ui, useT } from '../i18n';
 
 interface Props {
   markers: Marker[];
@@ -31,6 +32,7 @@ function Label({ x, y, u, width, children }: { x: number; y: number; u: number; 
 }
 
 export function Markers({ markers, width, u, interactive, onSelect }: Props) {
+  const t = useT();
   return (
     <g className="markers">
       {markers.map((m) => {
@@ -44,7 +46,7 @@ export function Markers({ markers, width, u, interactive, onSelect }: Props) {
           'data-marker': m.id,
           role: interactive ? 'button' : undefined,
           tabIndex: interactive ? 0 : -1,
-          'aria-label': interactive ? `${m.label} : afficher les informations` : undefined,
+          'aria-label': interactive ? `${t(m.label)} : ${t(ui.showInfo)}` : undefined,
           onClick: interactive ? () => onSelect(m) : undefined,
           onKeyDown: interactive ? onKeyDown : undefined,
         };
@@ -70,7 +72,7 @@ export function Markers({ markers, width, u, interactive, onSelect }: Props) {
                 </g>
               </g>
               <Label x={m.x} y={m.y + r + 24 * u} u={u} width={width}>
-                {m.label}
+                {t(m.label)}
               </Label>
             </g>
           );
@@ -87,7 +89,7 @@ export function Markers({ markers, width, u, interactive, onSelect }: Props) {
               </g>
             </g>
             <Label x={m.x} y={m.y - r - 12 * u} u={u} width={width}>
-              {m.label}
+              {t(m.label)}
             </Label>
           </g>
         );
