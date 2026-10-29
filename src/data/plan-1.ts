@@ -1,6 +1,7 @@
 import image from '../assets/plan-1.webp';
 import type { PlanData } from '../types';
 import { plan1Annotations } from './plan-1-annotations';
+import { plan1Products } from './plan-1-produits';
 
 /**
  * PAGE 1 — Plan de circulation de la cour.
@@ -420,6 +421,7 @@ export const plan1: PlanData = {
     },
   ],
   defaultRoute: 'chargement',
+  products: plan1Products,
 
   markers: [
     {

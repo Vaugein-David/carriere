@@ -110,4 +110,14 @@ export const ui = {
   },
   step: { fr: 'Étape', en: 'Step', ro: 'Pasul', pl: 'Krok' },
   call: { fr: 'Appeler', en: 'Call', ro: 'Sunați', pl: 'Zadzwoń' },
+  productRoute: {
+    fr: 'Itinéraire vers un produit',
+    en: 'Route to a product',
+    ro: 'Traseu către un produs',
+    pl: 'Trasa do produktu',
+  },
+  chooseProduct: { fr: 'Choisir un produit', en: 'Choose a product', ro: 'Alegeți un produs', pl: 'Wybierz produkt' },
+  aller: { fr: 'Aller', en: 'There', ro: 'Dus', pl: 'Dojazd' },
+  retour: { fr: 'Retour', en: 'Back', ro: 'Întors', pl: 'Powrót' },
+  legChoice: { fr: 'Sens du trajet', en: 'Direction', ro: 'Sensul traseului', pl: 'Kierunek' },
 } satisfies Record<string, Txt>;

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { InfoItem, PlanData } from '../types';
 import { PlanViewer, type PlanViewerHandle } from './PlanViewer';
 import { InfoSheet } from './InfoSheet';
-import { RouteChips, RouteSteps, SafetyRules, ZoneList } from './PageSections';
+import { ProductPicker, RouteChips, RouteSteps, SafetyRules, ZoneList, type Leg } from './PageSections';
 import { LangSwitcher, ui, useT, type Txt } from '../i18n';
 
 function toInfo(data: PlanData, id: string, t: (x: Txt) => string): InfoItem | null {
@@ -42,7 +42,20 @@ export function PlanPage({ data }: { data: PlanData }) {
   const [step, setStep] = useState(-1);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const route = data.routes.find((r) => r.id === routeId);
+  const [productId, setProductId] = useState<string | null>(null);
+  const [leg, setLeg] = useState<Leg>('aller');
+
+  const product = useMemo(
+    () => data.products?.flatMap((g) => g.products).find((p) => p.id === productId) ?? null,
+    [data, productId],
+  );
+  // Seuls les deux itinéraires du produit choisi s'ajoutent à ceux du plan
+  const routes = useMemo(
+    () => (product ? [...data.routes, product.aller, product.retour] : data.routes),
+    [data, product],
+  );
+  const activeId = product ? product[leg].id : routeId;
+  const route = routes.find((r) => r.id === activeId);
   const info = useMemo(() => (selectedId ? toInfo(data, selectedId, t) : null), [data, selectedId, t]);
 
   useEffect(() => {
@@ -51,7 +64,19 @@ export function PlanPage({ data }: { data: PlanData }) {
 
   const changeRoute = (id: string) => {
     setStep(-1);
+    setProductId(null);
     setRouteId(id);
+  };
+
+  const changeProduct = (id: string) => {
+    setStep(-1);
+    setLeg('aller');
+    setProductId(id);
+  };
+
+  const changeLeg = (l: Leg) => {
+    setStep(-1);
+    setLeg(l);
   };
 
   // Lien profond ?focus=<id> : centre la vue sur une zone ou un marqueur
@@ -82,12 +107,23 @@ export function PlanPage({ data }: { data: PlanData }) {
       </header>
 
       <main className="page-main">
-        <RouteChips routes={data.routes} activeId={routeId} onChange={changeRoute} />
+        <RouteChips routes={data.routes} activeId={activeId} onChange={changeRoute} />
+        {data.products && (
+          <ProductPicker
+            groups={data.products}
+            product={product}
+            leg={leg}
+            onProduct={changeProduct}
+            onLeg={changeLeg}
+          />
+        )}
 
         <PlanViewer
           ref={viewer}
           data={data}
-          activeRouteId={routeId}
+          routes={routes}
+          activeRouteId={activeId}
+          highlightArea={product?.area}
           selectedId={selectedId}
           editMode={editMode}
           onSelect={setSelectedId}

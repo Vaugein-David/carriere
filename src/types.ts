@@ -38,6 +38,8 @@ export interface Route {
   color: string;
   /** Étapes réparties uniformément le long du tracé */
   steps: Txt[];
+  /** Début de chaque étape, en fraction de la longueur du tracé (par défaut : réparties uniformément) */
+  stepAt?: number[];
 }
 
 export interface Marker extends MaybeProvisional {
@@ -76,6 +78,8 @@ export type AnnotationShape =
   | { polygon: number[] };
 
 export type AnnotationArea = AnnotationShape & {
+  /** Identifiant, pour mettre le stock en évidence quand on choisit son itinéraire */
+  id?: string;
   kind: AreaKind;
   /** Retour à la ligne avec \n */
   label?: Txt;
@@ -125,6 +129,25 @@ export interface PlanData {
   defaultRoute: string;
   markers: Marker[];
   rules: Rule[];
+  /** Produits accessibles, avec leur itinéraire aller et retour (menu « Itinéraire vers un produit ») */
+  products?: ProductGroup[];
+}
+
+export interface Product {
+  id: string;
+  /** Code du produit, tel qu'écrit sur le plan */
+  label: string;
+  /** Précision quand deux stocks portent le même nom */
+  hint?: Txt;
+  /** Zone des annotations mise en évidence */
+  area: string;
+  aller: Route;
+  retour: Route;
+}
+
+export interface ProductGroup {
+  label: Txt;
+  products: Product[];
 }
 
 /** Contenu affiché dans l'InfoSheet (déjà traduit) */

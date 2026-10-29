@@ -76,7 +76,14 @@ function AreaShape({ area, ...rest }: { area: AnnotationArea; className: string;
 }
 
 /** Annotations posées sur la photo : étiquettes des stocks, flèches de sens, sens interdits, textes. */
-export const AnnotationLayer = memo(function AnnotationLayer({ annotations }: { annotations: Annotations }) {
+export const AnnotationLayer = memo(function AnnotationLayer({
+  annotations,
+  highlight,
+}: {
+  annotations: Annotations;
+  /** Zone mise en évidence (stock de l'itinéraire choisi) */
+  highlight?: string | null;
+}) {
   const t = useT();
   const { areas, noEntry, labels = [], arrows = [] } = annotations;
   const arrowColors = [...new Set(arrows.map((a) => a.color))];
@@ -107,7 +114,7 @@ export const AnnotationLayer = memo(function AnnotationLayer({ annotations }: { 
       {areas.map((a, i) => {
         const fill = AREA[a.kind];
         return (
-          <g key={i} className={`annot-area annot-area--${a.kind}`}>
+          <g key={i} className={`annot-area annot-area--${a.kind}${a.id && a.id === highlight ? ' is-target' : ''}`}>
             <AreaShape area={a} className="annot-shape" fill={a.kind === 'wait' ? 'url(#annot-hatch)' : fill} />
             <AreaLabel area={a} fill={fill} />
           </g>

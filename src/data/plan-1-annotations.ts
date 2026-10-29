@@ -16,18 +16,18 @@ const VERT = '#00C853';
 export const plan1Annotations: Annotations = {
   areas: [
     // Rangée du haut
-    { kind: 'navy', rect: [198, 84, 45, 27], label: 'SUR\nCHARGE' },
-    { kind: 'stock', rect: [249, 80, 48, 28], label: '0-10\nR1V' },
-    { kind: 'stock', rect: [303, 79, 69, 29], label: '4-20\nR1V' },
-    { kind: 'reserve', rect: [378, 79, 69, 31], label: '10-20TLV\nSTOCK' },
-    { kind: 'reserve', rect: [455, 79, 68, 31], label: '4-10TLV\nSTOCK' },
+    { id: 'surcharge', kind: 'navy', rect: [198, 84, 45, 27], label: 'SUR\nCHARGE' },
+    // Le 0-10 R1V a disparu : le 4-20 R1V s'étend à sa place
+    { id: '4-20-r1v-haut', kind: 'stock', rect: [249, 80, 98, 28], label: '4-20\nR1V' },
+    { id: '10-20-tlv-stock', kind: 'reserve', rect: [353, 79, 94, 31], label: '10-20TLV\nSTOCK' },
+    { id: '4-10-tlv-stock', kind: 'reserve', rect: [455, 79, 68, 31], label: '4-10TLV\nSTOCK' },
     { kind: 'stock', rect: [527, 80, 27, 27], label: '0-4\nOR' },
     // Deuxième rangée
-    { kind: 'stock', rect: [314, 130, 58, 28], label: '4-16\nR1V' },
-    { kind: 'stock', rect: [382, 130, 59, 28], label: '0-20\nR1V' },
-    { kind: 'stock', rect: [500, 140, 30, 23], label: '4-10\nTLV' },
-    { kind: 'stock', rect: [535, 140, 30, 23], label: '10-20\nTLV' },
-    { kind: 'stock', rect: [220, 165, 28, 23], label: '0-20\nPLV' },
+    { id: '4-16-r1v', kind: 'stock', rect: [314, 130, 58, 28], label: '4-16\nR1V' },
+    { id: '4-20-r1v-bas', kind: 'stock', rect: [382, 130, 59, 28], label: '4-20\nR1V' },
+    { id: '4-10-tlv', kind: 'stock', rect: [500, 140, 30, 23], label: '4-10\nTLV' },
+    { id: '10-20-tlv', kind: 'stock', rect: [535, 140, 30, 23], label: '10-20\nTLV' },
+    { id: '0-20-plv', kind: 'stock', rect: [220, 165, 28, 23], label: '0-20\nPLV' },
 
     // Bâtiments et installations
     { kind: 'building', rect: [260, 175, 70, 23], label: 'HANGAR' },
@@ -35,8 +35,8 @@ export const plan1Annotations: Annotations = {
     { kind: 'tremie', rect: [152, 180, 63, 22], label: { fr: 'TRÉMIE', en: 'HOPPER', ro: 'BUNCĂR', pl: 'KOSZ' } },
     { kind: 'plant', polygon: [575, 128, 610, 100, 662, 106, 668, 140, 646, 158, 600, 160], label: { fr: 'Centrale\nà béton', en: 'Concrete\nplant', ro: 'Stație de\nbetoane', pl: 'Betoniarnia' } },
     { kind: 'building', rect: [577, 195, 29, 81], label: { fr: 'Poste de\ncommande', en: 'Control\nroom', ro: 'Cameră de\ncomandă', pl: 'Sterownia' }, vertical: true },
-    { kind: 'dark', rect: [268, 200, 22, 45], label: '0-4R1V', vertical: true },
-    { kind: 'dark', rect: [295, 200, 22, 45], label: '01-HA', vertical: true },
+    { id: '0-4-r1v-case', kind: 'dark', rect: [268, 200, 22, 45], label: '0-4R1V', vertical: true },
+    { id: '01-ha', kind: 'dark', rect: [295, 200, 22, 45], label: '01-HA', vertical: true },
     { kind: 'plant', rect: [710, 330, 111, 103], label: { fr: 'Usines\nà boues', en: 'Sludge\nplant', ro: 'Stație\nde nămol', pl: 'Instalacja\nszlamu' }, fontSize: 15 },
     { kind: 'building', rect: [888, 255, 18, 48], label: { fr: 'Laveur', en: 'Wheel wash', ro: 'Spălare roți', pl: 'Myjnia kół' }, vertical: true },
     { kind: 'building', rect: [891, 310, 21, 82], label: { fr: 'Bascule N°2', en: 'Weighbridge 2', ro: 'Cântar nr. 2', pl: 'Waga nr 2' }, vertical: true },
@@ -54,27 +54,28 @@ export const plan1Annotations: Annotations = {
     { kind: 'green', rect: [360, 305, 48, 40], label: '4-20\nPLV' },
 
     // Ouest
-    { kind: 'stock', rect: [53, 272, 45, 36], label: '0-4\nTLV' },
-    { kind: 'blue', rect: [124, 270, 31, 62], label: '0-1\nBU' },
-    { kind: 'stock', rect: [53, 325, 45, 35], label: '0-4\nR1V' },
-    { kind: 'stock', polygon: [0, 345, 22, 352, 36, 420, 34, 540, 24, 612, 0, 612], label: '0-80\nPV' },
-    { kind: 'stock', polygon: [62, 386, 104, 381, 112, 450, 120, 550, 70, 551, 64, 470], label: '0-20\nR1V' },
+    { id: '0-4-tlv', kind: 'stock', rect: [53, 272, 45, 36], label: '0-4\nTLV' },
+    { id: '0-1-bu', kind: 'blue', rect: [124, 270, 31, 62], label: '0-1\nBU' },
+    { id: '0-4-r1v', kind: 'stock', rect: [53, 325, 45, 35], label: '0-4\nR1V' },
+    { id: '0-80-pv', kind: 'stock', polygon: [0, 345, 22, 352, 36, 420, 34, 540, 24, 612, 0, 612], label: '0-80\nPV' },
+    { id: '0-20-r1v', kind: 'stock', polygon: [62, 386, 104, 381, 112, 450, 120, 550, 70, 551, 64, 470], label: '0-20\nR1V' },
     { kind: 'reserve', polygon: [130, 385, 165, 385, 222, 500, 140, 537], label: '4-20\nPLV\nSTOCK' },
     {
+      id: '0-4-plv',
       kind: 'stock',
       polygon: [212, 300, 240, 296, 256, 322, 252, 360, 272, 398, 302, 420, 330, 442, 318, 462, 284, 455, 250, 420, 222, 382, 202, 340],
       label: '0-4 PLV',
     },
 
     // Rangée basse
-    { kind: 'stock', rect: [318, 380, 64, 58], label: '0-31.5 SV\nou 0-4 SV' },
-    { kind: 'stock', rect: [390, 395, 47, 35], label: '4-20\nPLV*' },
-    { kind: 'stock', rect: [447, 398, 47, 40], label: '20-40\nSV*' },
-    { kind: 'stock', rect: [508, 396, 96, 40], label: '31.5-63\nSV' },
-    { kind: 'stock', rect: [316, 478, 47, 40], label: '0-31.5\nSV' },
-    { kind: 'reserve', rect: [368, 478, 47, 40], label: '0-4 SV\nSTOCK' },
-    { kind: 'orange', rect: [495, 478, 50, 38], label: 'S.M.D' },
-    { kind: 'stock', rect: [551, 478, 50, 40], label: '0-63\nSV' },
+    { id: '0-31-5-ou-0-4-sv', kind: 'stock', rect: [318, 380, 64, 58], label: '0-31.5 SV\nou 0-4 SV' },
+    { id: '4-20-plv', kind: 'stock', rect: [390, 395, 47, 35], label: '4-20\nPLV*' },
+    { id: '20-40-sv', kind: 'stock', rect: [447, 398, 47, 40], label: '20-40\nSV*' },
+    { id: '31-5-63-sv', kind: 'stock', rect: [508, 396, 96, 40], label: '31.5-63\nSV' },
+    { id: '0-31-5-sv', kind: 'stock', rect: [316, 478, 47, 40], label: '0-31.5\nSV' },
+    { id: '0-4-sv-stock', kind: 'reserve', rect: [368, 478, 47, 40], label: '0-4 SV\nSTOCK' },
+    { id: 'smd', kind: 'orange', rect: [495, 478, 50, 38], label: 'S.M.D' },
+    { id: '0-63-sv', kind: 'stock', rect: [551, 478, 50, 40], label: '0-63\nSV' },
 
     // Stocks du sud
     { kind: 'reserve', polygon: [152, 578, 240, 522, 282, 565, 198, 618], label: '0-4 PLV\nSTOCK' },

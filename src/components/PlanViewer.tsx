@@ -10,7 +10,7 @@ import {
 } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import type { PlanData } from '../types';
+import type { PlanData, Route } from '../types';
 import { drawUnit, hotspotCenter, type Point } from '../lib/geometry';
 import { copyText } from '../lib/clipboard';
 import { useReducedMotion } from '../hooks/useReducedMotion';
@@ -34,7 +34,11 @@ export interface PlanViewerHandle {
 
 interface Props {
   data: PlanData;
+  /** Itinéraires affichables (ceux du plan, plus ceux du produit choisi) */
+  routes: Route[];
   activeRouteId: string;
+  /** Zone des annotations à mettre en évidence */
+  highlightArea?: string | null;
   selectedId: string | null;
   editMode: boolean;
   onSelect: (id: string) => void;
@@ -46,7 +50,9 @@ interface Props {
 
 export function PlanViewer({
   data,
+  routes,
   activeRouteId,
+  highlightArea,
   selectedId,
   editMode,
   onSelect,
@@ -242,7 +248,7 @@ export function PlanViewer({
             onLoad={handleLoad}
           />
           <svg className="viewer-svg" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none">
-            {data.annotations && <AnnotationLayer annotations={data.annotations} />}
+            {data.annotations && <AnnotationLayer annotations={data.annotations} highlight={highlightArea} />}
             <g className="hotspots">
               {data.hotspots.map((h, i) => (
                 <Hotspot
@@ -257,7 +263,7 @@ export function PlanViewer({
               ))}
             </g>
             <RouteLayer
-              routes={data.routes}
+              routes={routes}
               activeId={activeRouteId}
               ready={introDone}
               u={u}

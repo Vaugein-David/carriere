@@ -44,3 +44,50 @@ export function smoothPath(pts: Point[]): string {
   }
   return d;
 }
+
+const dist = (a: Point, b: Point) => Math.hypot(b[0] - a[0], b[1] - a[1]);
+
+/** Longueur d'une ligne brisée. */
+export function polylineLength(pts: Point[]): number {
+  let l = 0;
+  for (let i = 1; i < pts.length; i++) l += dist(pts[i - 1]!, pts[i]!);
+  return l;
+}
+
+/** Projection d'un point sur une ligne brisée : segment, point projeté et distance depuis le début. */
+export function projectOnPolyline(pts: Point[], p: Point) {
+  let best = { i: 0, at: pts[0]!, along: 0, d: Infinity };
+  let run = 0;
+  for (let i = 0; i + 1 < pts.length; i++) {
+    const a = pts[i]!;
+    const b = pts[i + 1]!;
+    const len = dist(a, b);
+    const t = len ? Math.min(1, Math.max(0, ((p[0] - a[0]) * (b[0] - a[0]) + (p[1] - a[1]) * (b[1] - a[1])) / len ** 2)) : 0;
+    const at: Point = [a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1])];
+    const d = dist(at, p);
+    if (d < best.d) best = { i, at, along: run + t * len, d };
+    run += len;
+  }
+  return best;
+}
+
+/** Portion d'une ligne brisée comprise entre les projections de `from` et `to` (bouts par défaut). */
+export function slicePolyline(pts: Point[], from?: Point, to?: Point): Point[] {
+  const a = from ? projectOnPolyline(pts, from) : null;
+  const b = to ? projectOnPolyline(pts, to) : null;
+  const start = a ? a.i + 1 : 0;
+  const end = b ? b.i + 1 : pts.length;
+  return [...(a ? [a.at] : []), ...pts.slice(start, end), ...(b ? [b.at] : [])];
+}
+
+/** Met bout à bout des lignes brisées (sans doubler les points de jonction). */
+export function joinPolylines(...parts: Point[][]): Point[] {
+  const out: Point[] = [];
+  for (const part of parts) {
+    for (const p of part) {
+      const last = out[out.length - 1];
+      if (!last || dist(last, p) > 2) out.push(p);
+    }
+  }
+  return out;
+}

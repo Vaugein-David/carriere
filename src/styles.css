@@ -151,6 +151,131 @@ h1 {
   border: 2px solid currentColor;
 }
 
+/* ---------- Itinéraire vers un produit ---------- */
+
+.product-picker {
+  margin: 0 16px 12px;
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  background: var(--card);
+  overflow: hidden;
+}
+
+.product-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 60px;
+  padding: 8px 16px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.product-toggle-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.product-toggle-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.product-toggle-value {
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.product-toggle-value small {
+  font-size: 15px;
+  font-weight: 650;
+  color: var(--muted);
+}
+
+.product-toggle .icon {
+  flex: none;
+  transition: transform 0.2s;
+}
+
+.product-toggle[aria-expanded='true'] .icon {
+  transform: rotate(180deg);
+}
+
+.product-menu {
+  padding: 4px 16px 16px;
+  border-top: 1px solid var(--divider);
+}
+
+.product-group h3 {
+  margin: 14px 0 8px;
+  font-size: 15px;
+  font-weight: 750;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.product-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  min-height: 52px;
+  padding: 6px 12px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: var(--field);
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+
+.product-btn small {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.product-btn[aria-pressed='true'] {
+  border-color: var(--ink);
+  background: var(--yellow);
+  color: var(--on-yellow);
+}
+
+.product-btn[aria-pressed='true'] small {
+  color: var(--on-yellow);
+}
+
+.leg-switch {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px 14px;
+}
+
+.leg-switch .chip {
+  flex: 1;
+  justify-content: center;
+}
+
 /* ---------- Plan ---------- */
 
 .viewer {
@@ -255,6 +380,23 @@ h1 {
   stroke: #2B2B2B;
   stroke-width: 1.5;
   stroke-linejoin: round;
+}
+
+/* Stock de l'itinéraire choisi */
+.annot-area.is-target .annot-shape {
+  fill-opacity: 1;
+  stroke: #E0001B;
+  stroke-width: 4;
+  animation: target-pulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes target-pulse {
+  from {
+    stroke-width: 3;
+  }
+  to {
+    stroke-width: 7;
+  }
 }
 
 .annot-label,
@@ -1088,6 +1230,9 @@ h1 {
 /* ---------- Mouvement réduit ---------- */
 
 @media (prefers-reduced-motion: reduce) {
+  .annot-area.is-target .annot-shape {
+    animation: none;
+  }
   .viewer.is-live .hotspot-pulse,
   .viewer.is-live .marker-ring {
     animation: none;

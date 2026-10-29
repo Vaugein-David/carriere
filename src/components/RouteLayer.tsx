@@ -94,9 +94,10 @@ export function RouteLayer({ routes, activeId, ready, u, reducedMotion, onStepCh
       }
 
       const duration = gsap.utils.clamp(2.2, 7, L / (u * 160));
+      const stepAt = route.stepAt;
       const travel = (p: number) => {
         place(vehicle, p * L);
-        setStep(Math.min(n - 1, Math.floor(p * n)));
+        setStep(stepAt ? stepAt.findLastIndex((s) => s <= p) : Math.min(n - 1, Math.floor(p * n)));
       };
 
       // 1. Le tracé se dessine derrière le véhicule

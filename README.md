@@ -53,6 +53,13 @@ Tout ce qui est dessiné sur la photo est dans [`src/data/plan-1-annotations.ts`
 - **Flèches de sens de circulation** (`arrows`) : un tracé dans le sens de la flèche et sa couleur (outil « Itinéraire » de `?edit`).
 - **Panneaux sens interdit** (`noEntry`) et **textes libres** (`labels`).
 
+## Itinéraires vers les produits
+
+Le menu « Itinéraire vers un produit » vient de [`src/data/plan-1-produits.ts`](src/data/plan-1-produits.ts). Les pistes y sont décrites une fois (lignes brisées dans le sens de circulation) ; chaque produit indique son point d'arrêt (`stop`) et les pistes de l'aller et du retour, et le tracé est calculé automatiquement. Le `id` d'un produit est celui de son stock dans `plan-1-annotations.ts`, qui clignote sur le plan quand on le choisit. Les stocks inaccessibles aux camions (barrés sur l'affiche) ne figurent pas dans la liste.
+
+- **Ajouter un produit** : donnez un `id` à son stock dans les annotations, puis ajoutez une ligne dans le bon groupe en copiant un voisin du même secteur et en changeant `stop`.
+- **Retirer un produit** : supprimez sa ligne.
+
 ## Remplacer une image
 
 1. Exportez le plan en **WebP** (environ 2000 px de large au maximum, qualité 80).
