@@ -9,7 +9,29 @@
   --blue: #0050e6;
   --focus: #0050e6;
   --radius: 14px;
-  color-scheme: light;
+  /* Interface (le plan et ses annotations gardent leurs propres couleurs) */
+  --line: #000;
+  --muted: #555;
+  --soft: #333;
+  --field: #f3f3f3;
+  --divider: #e2e2e2;
+  --on-yellow: #111;
+  /* La page gère elle-même le sombre : les navigateurs ne l'assombrissent plus de force */
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #f2f2f2;
+    --paper: #121212;
+    --card: #1d1d1d;
+    --line: #6b6b6b;
+    --muted: #b4b4b4;
+    --soft: #d4d4d4;
+    --field: #2a2a2a;
+    --divider: #353535;
+    --focus: #6ea2ff;
+  }
 }
 
 *,
@@ -57,7 +79,7 @@ a {
 .eyebrow {
   margin-top: 0;
   margin-bottom: 4px;
-  color: #555;
+  color: var(--muted);
   font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -75,7 +97,7 @@ h1 {
 .lead {
   margin-top: 8px;
   margin-bottom: 0;
-  color: #333;
+  color: var(--soft);
   font-size: 18px;
 }
 
@@ -108,7 +130,7 @@ h1 {
   padding: 0 16px;
   border: 2px solid var(--ink);
   border-radius: 999px;
-  background: #fff;
+  background: var(--card);
   color: var(--ink);
   font-size: 17px;
   font-weight: 750;
@@ -118,7 +140,7 @@ h1 {
 
 .chip[aria-pressed='true'] {
   background: var(--ink);
-  color: #fff;
+  color: var(--paper);
 }
 
 .chip-dot {
@@ -183,7 +205,7 @@ h1 {
 
 .image-credit {
   margin: 4px 16px 0;
-  color: #555;
+  color: var(--muted);
   font-size: 13px;
 }
 
@@ -207,7 +229,7 @@ h1 {
 .legend-swatch {
   width: 26px;
   height: 8px;
-  border: 1.5px solid #000;
+  border: 1.5px solid var(--line);
   border-radius: 4px;
 }
 
@@ -305,7 +327,7 @@ h1 {
 
 .viewer-tip {
   margin: 8px 16px 0;
-  color: #333;
+  color: var(--soft);
   font-size: 15px;
 }
 
@@ -668,7 +690,7 @@ h1 {
 
 .card {
   padding: 16px;
-  border: 2px solid #000;
+  border: 2px solid var(--line);
   border-radius: var(--radius);
   background: var(--card);
 }
@@ -687,7 +709,7 @@ h1 {
   flex: none;
   width: 20px;
   height: 20px;
-  border: 2px solid #000;
+  border: 2px solid var(--line);
   border-radius: 5px;
 }
 
@@ -718,8 +740,8 @@ h1 {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #000;
-  color: #fff;
+  background: var(--ink);
+  color: var(--paper);
   font-weight: 800;
 }
 
@@ -729,11 +751,13 @@ h1 {
 
 .step.is-current {
   border-color: #000;
+  color: var(--on-yellow);
   background: var(--yellow);
   font-weight: 750;
 }
 
 .step.is-current .step-num {
+  background: #000;
   color: var(--yellow);
 }
 
@@ -747,7 +771,7 @@ h1 {
   display: grid;
   gap: 4px;
   padding: 12px 0;
-  border-top: 2px solid #e2e2e2;
+  border-top: 2px solid var(--divider);
 }
 
 .rule:first-child {
@@ -789,9 +813,9 @@ h1 {
   width: 100%;
   min-height: 54px;
   padding: 8px 14px;
-  border: 2px solid #000;
+  border: 2px solid var(--line);
   border-radius: 10px;
-  background: #f3f3f3;
+  background: var(--field);
   color: var(--ink);
   font-weight: 700;
   text-align: left;
@@ -802,7 +826,7 @@ h1 {
   flex: none;
   width: 18px;
   height: 18px;
-  border: 2px solid #000;
+  border: 2px solid var(--line);
   border-radius: 50%;
 }
 
@@ -812,9 +836,9 @@ h1 {
   gap: 12px;
   min-height: 52px;
   padding: 10px 16px;
-  border: 2px solid #000;
+  border: 2px solid var(--line);
   border-radius: 12px;
-  background: #fff;
+  background: var(--card);
   color: var(--ink);
   font-weight: 800;
   text-decoration: none;
@@ -858,9 +882,9 @@ h1 {
   align-items: flex-start;
   gap: 14px;
   padding: 16px;
-  border: 2px solid #000;
+  border: 2px solid var(--line);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--card);
 }
 
 .procedure-num {
@@ -872,6 +896,7 @@ h1 {
   border-radius: 50%;
   background: var(--yellow);
   border: 2px solid #000;
+  color: var(--on-yellow);
   font-size: 22px;
   font-weight: 900;
 }
@@ -882,7 +907,7 @@ h1 {
   font-weight: 900;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #444;
+  color: var(--muted);
 }
 
 .procedure-step-text {
@@ -905,7 +930,7 @@ h1 {
 .procedure-note {
   margin-top: 14px;
   padding: 14px 16px;
-  border: 2px solid #000;
+  border: 2px solid var(--line);
   border-radius: var(--radius);
 }
 
@@ -927,6 +952,8 @@ h1 {
 
 .procedure-note--info {
   background: var(--yellow);
+  border-color: #000;
+  color: var(--on-yellow);
 }
 
 /* Sur fond jaune, le triangle reçoit un fond blanc pour rester visible */
@@ -952,10 +979,10 @@ h1 {
   margin: 0 auto;
   padding: 0 18px calc(18px + env(safe-area-inset-bottom));
   overflow: auto;
-  border: 3px solid #000;
+  border: 3px solid var(--line);
   border-bottom: 0;
   border-radius: 18px 18px 0 0;
-  background: #fff;
+  background: var(--card);
   box-shadow: 0 -10px 30px rgb(0 0 0 / 0.35);
   overscroll-behavior: contain;
 }
@@ -990,6 +1017,7 @@ h1 {
   border: 2px solid #000;
   border-radius: 10px;
   background: var(--yellow);
+  color: var(--on-yellow);
 }
 
 .icon-btn {
@@ -998,10 +1026,10 @@ h1 {
   place-items: center;
   width: 52px;
   height: 52px;
-  border: 2px solid #000;
+  border: 2px solid var(--line);
   border-radius: 12px;
-  background: #fff;
-  color: #000;
+  background: var(--card);
+  color: var(--ink);
   cursor: pointer;
 }
 
