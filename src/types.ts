@@ -78,6 +78,8 @@ export type AnnotationArea = AnnotationShape & {
   vertical?: boolean;
   /** Taille de texte maximale (par défaut : ajustée à la surface) */
   fontSize?: number;
+  /** Position du libellé si le centre de la forme ne convient pas (forme en L, par ex.) */
+  labelAt?: [number, number];
 };
 
 /** Annotations dessinées sur la photo, dans le repère du plan (0 0 width height). */

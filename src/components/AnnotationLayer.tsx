@@ -43,8 +43,7 @@ function AreaLabel({ area, fill }: { area: AnnotationArea; fill: string }) {
     5,
     Math.min(area.fontSize ?? 13, (along - 6) / (longest * 0.62), ((across - 4) / lines.length) * 0.82),
   );
-  const cx = x + w / 2;
-  const cy = y + h / 2;
+  const [cx, cy] = area.labelAt ?? [x + w / 2, y + h / 2];
   const first = -((lines.length - 1) * size * 1.05) / 2;
   return (
     <text

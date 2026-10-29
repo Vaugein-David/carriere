@@ -652,17 +652,17 @@ h1 {
   padding: 16px;
 }
 
-/* Grand écran : deux colonnes où les blocs s'empilent sans laisser de vide */
+.sections-col {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+/* Grand écran : deux colonnes alignées en haut, les blocs s'empilent dans chacune */
 @media (min-width: 900px) {
   .sections {
-    display: block;
-    columns: 2;
-    column-gap: 16px;
-  }
-
-  .sections > * {
-    break-inside: avoid;
-    margin-bottom: 16px;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
   }
 }
 

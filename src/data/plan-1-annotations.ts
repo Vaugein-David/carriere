@@ -42,9 +42,11 @@ export const plan1Annotations: Annotations = {
     { kind: 'building', rect: [891, 310, 21, 82], label: 'Bascule N°2', vertical: true },
 
     // Parkings et attente trémie
-    { kind: 'parking', rect: [40, 78, 55, 57], label: 'Parking\nVL' },
-    { kind: 'parking', polygon: [42, 150, 110, 136, 92, 212, 40, 210], label: 'Parking\nPL' },
-    { kind: 'wait', polygon: [160, 72, 180, 84, 135, 160, 116, 149] },
+    { kind: 'parking', rect: [40, 79, 53, 56], label: 'Parking\nVL' },
+    { kind: 'building', rect: [46, 137, 42, 12], label: 'Réfectoire' },
+    // Parking PL : forme en L qui longe la zone d'attente
+    { kind: 'parking', polygon: [101, 76, 137, 76, 152, 86, 118, 148, 106, 162, 96, 182, 94, 209, 49, 209, 40, 156, 93, 157, 94, 136, 100, 134], label: 'Parking\nPL', labelAt: [68, 183], fontSize: 12 },
+    { kind: 'wait', polygon: [164, 73, 182, 84, 136, 160, 119, 149] },
 
     // Centre
     { kind: 'green', rect: [403, 205, 44, 77], label: '0-4\nTLV' },
@@ -129,10 +131,10 @@ export const plan1Annotations: Annotations = {
     { color: BLEU, d: 'M 180 366 L 180 342' },
     { color: BLEU, d: 'M 250 480 L 218 418' },
     { color: BLEU, d: 'M 890 490 C 882 560 871 620 862 662' },
-    // Violet : décharge remblais
+    // Violet : accès cour après décharge (retour de la décharge par la piste basse)
     { color: VIOLET, d: 'M 876 560 L 876 492 C 877 470 870 458 850 454 C 780 450 700 452 640 452 L 568 444' },
-    // Vert : accès cour après décharge
-    { color: VERT, d: 'M 872 660 C 876 600 880 540 881 490 C 882 420 884 360 888 308' },
+    // Vert : accès décharge remblais (descente le long de la bascule)
+    { color: VERT, d: 'M 888 308 C 884 360 882 420 881 490 C 880 540 876 600 872 660' },
   ],
 
   noEntry: [
@@ -149,7 +151,6 @@ export const plan1Annotations: Annotations = {
 
   labels: [
     { x: 150, y: 50, text: 'Zone d’attente trémie', size: 12 },
-    { x: 67, y: 145, text: 'Réfectoire', size: 9 },
     { x: 856, y: 640, text: 'Vers décharge remblais', size: 13, anchor: 'end' },
     { x: 884, y: 662, text: 'Accès site', size: 12, anchor: 'end' },
   ],

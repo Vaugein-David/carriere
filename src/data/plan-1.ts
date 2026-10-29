@@ -15,8 +15,8 @@ import { plan1Annotations } from './plan-1-annotations';
 
 const JAUNE = '#FFD400'; // circulation dans la cour (entrée)
 const BLEU = '#1F7AE0'; // sortie
-const VIOLET = '#A64DD6'; // décharge remblais
-const VERT = '#00C853'; // accès cour après décharge
+const VIOLET = '#A64DD6'; // accès cour après décharge
+const VERT = '#00C853'; // accès décharge remblais
 const ROUGE = '#E0001B'; // zones interdites
 const BLANC = '#FFFFFF';
 const ORANGE = '#FF8A00';
@@ -33,8 +33,8 @@ export const plan1: PlanData = {
   legend: [
     { color: JAUNE, label: 'Circulation dans la cour (entrée)' },
     { color: BLEU, label: 'Sortie' },
-    { color: VIOLET, label: 'Décharge remblais' },
-    { color: VERT, label: 'Accès cour après décharge' },
+    { color: VIOLET, label: 'Accès cour après décharge' },
+    { color: VERT, label: 'Accès décharge remblais' },
   ],
   width: 961,
   height: 667,
@@ -56,7 +56,7 @@ export const plan1: PlanData = {
       description: 'L’attente pour la trémie se fait le long du parking à engins.',
       consigne: 'Ne stationnez pas sur la piste : attendez votre tour dans la zone jaune.',
       shape: 'polygon',
-      coords: [160, 72, 180, 84, 135, 160, 116, 149],
+      coords: [164, 73, 182, 84, 136, 160, 119, 149],
       color: JAUNE,
     },
     {
@@ -81,7 +81,7 @@ export const plan1: PlanData = {
       label: 'Parking PL',
       description: 'Stationnement des poids lourds.',
       shape: 'polygon',
-      coords: [42, 150, 110, 136, 92, 212, 40, 210],
+      coords: [101, 76, 137, 76, 152, 86, 118, 148, 106, 162, 96, 182, 94, 209, 49, 209, 40, 156, 93, 157, 94, 136, 100, 134],
       color: BLANC,
     },
     {
@@ -89,7 +89,7 @@ export const plan1: PlanData = {
       label: 'Parking VL et réfectoire',
       description: 'Stationnement des véhicules légers. Le réfectoire se trouve entre les deux parkings.',
       shape: 'polygon',
-      coords: [40, 78, 96, 78, 96, 150, 40, 150],
+      coords: [40, 79, 93, 79, 93, 149, 40, 149],
       color: BLANC,
     },
     {
@@ -132,7 +132,7 @@ export const plan1: PlanData = {
       id: 'decharge-remblais',
       label: 'Décharge remblais',
       description:
-        'Accès à la décharge de remblais par la piste basse (flèche violette). Après la décharge, l’accès à la cour se fait par la voie verte.',
+        'Accès à la décharge de remblais par la voie verte, le long de la bascule. Après la décharge, l’accès à la cour se fait par la piste basse (flèche violette).',
       shape: 'polygon',
       coords: [678, 619, 838, 619, 838, 652, 678, 652],
       color: VIOLET,
@@ -169,26 +169,25 @@ export const plan1: PlanData = {
       ],
     },
     {
-      id: 'remblais',
-      label: 'Décharge remblais',
-      color: VIOLET,
-      d: 'M 846 667 C 852 610 864 540 878 494 C 882 476 874 462 845 458 C 800 452 720 451 640 451 L 566 448',
+      id: 'acces-decharge',
+      label: 'Accès décharge remblais',
+      color: VERT,
+      d: 'M 905 240 C 888 262 881 290 881 320 C 882 380 882 440 880 490 C 878 540 872 600 868 667',
       steps: [
-        'Entrée par la piste d’accès (est)',
-        'Bifurquer à gauche avant la bascule',
-        'Piste basse vers l’ouest (flèche violette)',
-        'Décharger selon les indications du chargeur',
+        'Depuis la cour, prendre la voie verte le long de la bascule',
+        'Descendre par la piste d’accès',
+        'Continuer vers la décharge remblais',
       ],
     },
     {
       id: 'retour-cour',
-      label: 'Retour cour après décharge',
-      color: VERT,
-      d: 'M 868 667 C 872 600 878 540 880 490 C 882 440 882 380 881 320 C 881 290 888 262 905 240',
+      label: 'Accès cour après décharge',
+      color: VIOLET,
+      d: 'M 846 667 C 852 610 864 540 878 494 C 882 476 874 462 845 458 C 800 452 720 451 640 451 L 566 448',
       steps: [
-        'Retour de la décharge par la piste d’accès',
-        'Remonter par la voie verte, à gauche de la bascule',
-        'Rejoindre la cour',
+        'Retour de la décharge remblais par la piste d’accès',
+        'Bifurquer avant la bascule (flèche violette)',
+        'Piste basse vers l’ouest jusqu’à la cour',
       ],
     },
   ],
@@ -209,7 +208,7 @@ export const plan1: PlanData = {
   rules: [
     {
       title: 'Sens de circulation',
-      text: 'Suivez les flèches : jaune pour entrer dans la cour, bleu pour sortir, violet pour la décharge remblais, vert pour revenir dans la cour après décharge.',
+      text: 'Suivez les flèches : jaune pour entrer dans la cour, bleu pour sortir, vert pour aller à la décharge remblais, violet pour revenir dans la cour après décharge.',
     },
     {
       title: 'Zones interdites',

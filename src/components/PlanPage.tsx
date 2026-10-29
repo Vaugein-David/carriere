@@ -99,9 +99,13 @@ export function PlanPage({ data, eyebrow }: { data: PlanData; eyebrow: string })
         {data.imageCredit && <p className="image-credit">Vue aérienne : {data.imageCredit}</p>}
 
         <div className="sections">
-          <RouteSteps route={route} current={step} />
-          <SafetyRules rules={data.rules} />
-          <ZoneList hotspots={data.hotspots} onSelect={selectFromList} />
+          <div className="sections-col">
+            <RouteSteps route={route} current={step} />
+            <SafetyRules rules={data.rules} />
+          </div>
+          <div className="sections-col">
+            <ZoneList hotspots={data.hotspots} onSelect={selectFromList} />
+          </div>
         </div>
       </main>
 
