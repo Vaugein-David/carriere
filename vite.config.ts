@@ -14,7 +14,8 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      injectRegister: 'script',
+      // Enregistré dans src/pwa.ts : la page se recharge dès qu'une nouvelle version est disponible
+      injectRegister: false,
       // Chaque page déclare son propre manifest (public/manifest-plan-*.webmanifest)
       manifest: false,
       workbox: {
@@ -22,6 +23,8 @@ export default defineConfig({
         navigateFallback: null,
         ignoreURLParametersMatching: [/^utm_/, /^fbclid$/, /^edit$/, /^focus$/],
         cleanupOutdatedCaches: true,
+        skipWaiting: true,
+        clientsClaim: true,
         maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,
       },
     }),
