@@ -32,20 +32,20 @@ export const plan1Annotations: Annotations = {
     // Bâtiments et installations
     { kind: 'building', rect: [260, 175, 70, 23], label: 'HANGAR' },
     { kind: 'building', rect: [497, 172, 68, 26], label: 'SILO' },
-    { kind: 'tremie', rect: [152, 180, 63, 22], label: { fr: 'TRÉMIE', en: 'HOPPER', ro: 'BUNCĂR', pl: 'KOSZ' } },
-    { kind: 'plant', polygon: [575, 128, 610, 100, 662, 106, 668, 140, 646, 158, 600, 160], label: { fr: 'Centrale\nà béton', en: 'Concrete\nplant', ro: 'Stație de\nbetoane', pl: 'Betoniarnia' } },
-    { kind: 'building', rect: [577, 195, 29, 81], label: { fr: 'Poste de\ncommande', en: 'Control\nroom', ro: 'Cameră de\ncomandă', pl: 'Sterownia' }, vertical: true },
+    { kind: 'tremie', rect: [152, 180, 63, 22], label: { fr: 'TRÉMIE', en: 'HOPPER', ro: 'BUNCĂR', pl: 'KOSZ', pt: 'TREMONHA' } },
+    { kind: 'plant', polygon: [575, 128, 610, 100, 662, 106, 668, 140, 646, 158, 600, 160], label: { fr: 'Centrale\nà béton', en: 'Concrete\nplant', ro: 'Stație de\nbetoane', pl: 'Betoniarnia', pt: 'Central\nde betão' } },
+    { kind: 'building', rect: [577, 195, 29, 81], label: { fr: 'Poste de\ncommande', en: 'Control\nroom', ro: 'Cameră de\ncomandă', pl: 'Sterownia', pt: 'Posto de\ncomando' }, vertical: true },
     { id: '0-4-r1v-case', kind: 'dark', rect: [268, 200, 22, 45], label: '0-4R1V', vertical: true },
     { id: '01-ha', kind: 'dark', rect: [295, 200, 22, 45], label: '01-HA', vertical: true },
-    { kind: 'plant', rect: [710, 330, 111, 103], label: { fr: 'Usines\nà boues', en: 'Sludge\nplant', ro: 'Stație\nde nămol', pl: 'Instalacja\nszlamu' }, fontSize: 15 },
-    { kind: 'building', rect: [888, 255, 18, 48], label: { fr: 'Laveur', en: 'Wheel wash', ro: 'Spălare roți', pl: 'Myjnia kół' }, vertical: true },
-    { kind: 'building', rect: [891, 310, 21, 82], label: { fr: 'Bascule N°2', en: 'Weighbridge 2', ro: 'Cântar nr. 2', pl: 'Waga nr 2' }, vertical: true },
+    { kind: 'plant', rect: [710, 330, 111, 103], label: { fr: 'Usines\nà boues', en: 'Sludge\nplant', ro: 'Stație\nde nămol', pl: 'Instalacja\nszlamu', pt: 'Estação\nde lamas' }, fontSize: 15 },
+    { kind: 'building', rect: [888, 255, 18, 48], label: { fr: 'Laveur', en: 'Wheel wash', ro: 'Spălare roți', pl: 'Myjnia kół', pt: 'Lava-rodas' }, vertical: true },
+    { kind: 'building', rect: [891, 310, 21, 82], label: { fr: 'Bascule N°2', en: 'Weighbridge 2', ro: 'Cântar nr. 2', pl: 'Waga nr 2', pt: 'Báscula n.º 2' }, vertical: true },
 
     // Parkings et attente trémie
-    { kind: 'parking', rect: [40, 79, 53, 56], label: { fr: 'Parking\nVL', en: 'Car\npark', ro: 'Parcare\nauto', pl: 'Parking\nosobowy' } },
-    { kind: 'building', rect: [46, 137, 42, 12], label: { fr: 'Réfectoire', en: 'Canteen', ro: 'Cantină', pl: 'Stołówka' } },
+    { kind: 'parking', rect: [40, 79, 53, 56], label: { fr: 'Parking\nVL', en: 'Car\npark', ro: 'Parcare\nauto', pl: 'Parking\nosobowy', pt: 'Parque\nligeiros' } },
+    { kind: 'building', rect: [46, 137, 42, 12], label: { fr: 'Réfectoire', en: 'Canteen', ro: 'Cantină', pl: 'Stołówka', pt: 'Refeitório' } },
     // Parking engins : forme en L qui longe la zone d'attente
-    { kind: 'parking', polygon: [101, 76, 137, 76, 152, 86, 118, 148, 106, 162, 96, 182, 94, 209, 49, 209, 40, 156, 93, 157, 94, 136, 100, 134], label: { fr: 'Parking\nengins', en: 'Plant\nparking', ro: 'Parcare\nutilaje', pl: 'Parking\nmaszyn' }, labelAt: [68, 183], fontSize: 12 },
+    { kind: 'parking', polygon: [101, 76, 137, 76, 152, 86, 118, 148, 106, 162, 96, 182, 94, 209, 49, 209, 40, 156, 93, 157, 94, 136, 100, 134], label: { fr: 'Parking\nengins', en: 'Plant\nparking', ro: 'Parcare\nutilaje', pl: 'Parking\nmaszyn', pt: 'Parque de\nmáquinas' }, labelAt: [68, 183], fontSize: 12 },
     { kind: 'wait', polygon: [164, 73, 182, 84, 136, 160, 119, 149] },
 
     // Centre
@@ -151,8 +151,8 @@ export const plan1Annotations: Annotations = {
   ],
 
   labels: [
-    { x: 150, y: 50, text: { fr: 'Zone d’attente trémie', en: 'Hopper waiting area', ro: 'Așteptare buncăr', pl: 'Oczekiwanie do kosza' }, size: 12 },
-    { x: 856, y: 640, text: { fr: 'Vers décharge remblais', en: 'To backfill tip', ro: 'Spre depozitul de umplutură', pl: 'Do składowiska nasypu' }, size: 13, anchor: 'end' },
-    { x: 884, y: 662, text: { fr: 'Accès site', en: 'Site access', ro: 'Acces carieră', pl: 'Wjazd' }, size: 12, anchor: 'end' },
+    { x: 150, y: 50, text: { fr: 'Zone d’attente trémie', en: 'Hopper waiting area', ro: 'Așteptare buncăr', pl: 'Oczekiwanie do kosza', pt: 'Espera pela tremonha' }, size: 12 },
+    { x: 856, y: 640, text: { fr: 'Vers décharge remblais', en: 'To backfill tip', ro: 'Spre depozitul de umplutură', pl: 'Do składowiska nasypu', pt: 'Para o aterro' }, size: 13, anchor: 'end' },
+    { x: 884, y: 662, text: { fr: 'Accès site', en: 'Site access', ro: 'Acces carieră', pl: 'Wjazd', pt: 'Acesso ao local' }, size: 12, anchor: 'end' },
   ],
 };

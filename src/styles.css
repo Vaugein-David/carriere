@@ -1242,3 +1242,71 @@ h1 {
     transition: none;
   }
 }
+
+/* ---------- Accueil (QR code unique) ---------- */
+
+.home {
+  padding: 16px 16px 0;
+}
+
+.home-links {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 112px;
+  padding: 16px;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.home-link:active {
+  background: var(--field);
+}
+
+.home-num {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 2px solid #000;
+  border-radius: 50%;
+  background: var(--yellow);
+  color: var(--on-yellow);
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.home-text {
+  display: grid;
+  flex: 1;
+  gap: 4px;
+}
+
+.home-text strong {
+  font-size: 21px;
+  line-height: 1.2;
+}
+
+.home-text span {
+  color: var(--soft);
+  font-size: 16px;
+}
+
+.home-link .icon {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  transform: rotate(-90deg);
+}

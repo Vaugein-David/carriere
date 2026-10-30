@@ -6,7 +6,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import QRCode from 'qrcode';
 
-const PAGES = ['plan-1', 'plan-2'];
+// `accueil` : QR code unique vers la page d'accueil, qui renvoie vers les deux plans
+const PAGES = { accueil: '', 'plan-1': 'plan-1/', 'plan-2': 'plan-2/' };
 const OUT_DIR = fileURLToPath(new URL('../qr/', import.meta.url));
 
 const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
@@ -26,11 +27,11 @@ const options = { errorCorrectionLevel: 'H', margin: 4, color: { dark: '#000000'
 
 await mkdir(OUT_DIR, { recursive: true });
 
-for (const page of PAGES) {
-  const url = new URL(`${page}/`, baseUrl).href;
+for (const [page, path] of Object.entries(PAGES)) {
+  const url = new URL(path, baseUrl).href;
   await QRCode.toFile(`${OUT_DIR}${page}.png`, url, { ...options, width: 2048 });
   await writeFile(`${OUT_DIR}${page}.svg`, await QRCode.toString(url, { ...options, type: 'svg' }));
-  console.log(`${page}  →  ${url}`);
+  console.log(`${page.padEnd(7)}  →  ${url}`);
 }
 
 console.log('\nQR codes écrits dans ./qr (PNG 2048 px + SVG).');

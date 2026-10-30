@@ -1,9 +1,10 @@
 # Carrière : plans interactifs (QR codes)
 
-Site statique de deux pages, chacune ouverte par un QR code :
+Site statique de deux pages, avec une page d'accueil qui renvoie vers les deux : un seul QR code suffit (celui de l'accueil). Chaque page garde aussi son propre QR code.
 
 | Page | Contenu | Données | Image |
 | --- | --- | --- | --- |
+| `/carriere/` | Accueil : deux gros boutons vers les plans | `src/pages/Accueil.tsx` | aucune |
 | `/carriere/plan-1/` | Plan de circulation de la cour | `src/data/plan-1.ts` | `src/assets/plan-1.webp` |
 | `/carriere/plan-2/` | Poste de chargement (trémie) | `src/data/plan-2.ts` | aucune (texte seul) |
 
@@ -13,9 +14,9 @@ Stack : Vite (multi-page, sans routeur) + React + TypeScript strict + GSAP. PWA 
 
 ## Langues
 
-Les deux pages existent en **français, anglais, roumain et polonais** (boutons FR · EN · RO · PL en haut de page). La langue du téléphone est choisie automatiquement ; le choix du visiteur est mémorisé.
+Toutes les pages existent en **français, anglais, roumain, polonais et portugais** (boutons FR · EN · RO · PL · PT en haut de page). La langue du téléphone est choisie automatiquement ; le choix du visiteur est mémorisé.
 
-Dans `src/data/*.ts`, chaque texte s'écrit `{ fr: '…', en: '…', ro: '…', pl: '…' }`. Une langue absente affiche le français. Les textes de l'interface (boutons, titres de blocs) sont dans `src/i18n.tsx`.
+Dans `src/data/*.ts`, chaque texte s'écrit `{ fr: '…', en: '…', ro: '…', pl: '…', pt: '…' }`. Une langue absente affiche le français. Les textes de l'interface (boutons, titres de blocs) sont dans `src/i18n.tsx`.
 
 ## Développement
 
@@ -24,7 +25,7 @@ npm install
 npm run dev
 ```
 
-Ouvrir http://localhost:5173/carriere/plan-1/ et http://localhost:5173/carriere/plan-2/.
+Ouvrir http://localhost:5173/carriere/ (accueil), http://localhost:5173/carriere/plan-1/ et http://localhost:5173/carriere/plan-2/.
 
 ## Mode édition (`?edit`)
 
@@ -91,10 +92,9 @@ npm run preview   # http://localhost:4173/carriere/plan-1/
 
 URLs finales à mettre dans les QR codes :
 
+- `https://<utilisateur>.github.io/carriere/` : accueil, le QR code unique à afficher
 - `https://<utilisateur>.github.io/carriere/plan-1/`
 - `https://<utilisateur>.github.io/carriere/plan-2/`
-
-Aucune page n'existe à la racine `/carriere/`.
 
 ## QR codes
 
@@ -105,9 +105,9 @@ npm run qr
 ```
 
 Vous pouvez aussi passer l'URL directement : `npm run qr -- https://<utilisateur>.github.io/carriere/`.
-Le script écrit `qr/plan-1.png`, `qr/plan-1.svg`, `qr/plan-2.png` et `qr/plan-2.svg` (PNG 2048 px, correction d'erreur H). Utilisez le SVG pour l'impression grand format.
+Le script écrit `qr/accueil.*`, `qr/plan-1.*` et `qr/plan-2.*`, chacun en PNG 2048 px et en SVG (correction d'erreur H). `qr/accueil` est le QR code unique. Utilisez le SVG pour l'impression grand format.
 
 ## Liens utiles
 
 - `?focus=<id>` centre la vue sur une zone ou un marqueur au chargement. Exemple : `/carriere/plan-1/?focus=tremie`.
-- Hors ligne : après une première visite en ligne, les deux pages et leurs images restent consultables sans réseau.
+- Hors ligne : après une première visite en ligne, toutes les pages et leurs images restent consultables sans réseau.

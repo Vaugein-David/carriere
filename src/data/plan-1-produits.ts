@@ -69,24 +69,28 @@ const PESEE_ENTREE = {
   en: 'Weigh in at the entry weighbridge',
   ro: 'Cântărire la cântarul de intrare',
   pl: 'Ważenie na wadze wjazdowej',
+  pt: 'Pesagem na báscula de entrada',
 };
 const PISTE_GAUCHE = {
   fr: 'Après la bascule, prendre la piste de gauche puis la piste du haut',
   en: 'After the weighbridge, take the left-hand track, then the top track',
   ro: 'După cântar, luați pista din stânga, apoi pista de sus',
   pl: 'Za wagą skręć w lewą drogę, a potem jedź górną drogą',
+  pt: 'Depois da báscula, siga pela pista da esquerda e depois pela pista de cima',
 };
 const ARRET = {
   fr: 'Arrêt au stock {p} pour le chargement',
   en: 'Stop at the {p} stockpile for loading',
   ro: 'Opriți la stocul {p} pentru încărcare',
   pl: 'Zatrzymaj się przy hałdzie {p} do załadunku',
+  pt: 'Pare no stock {p} para a carga',
 };
 const DEPART = {
   fr: 'Repartir du stock {p} en suivant les flèches bleues',
   en: 'Leave the {p} stockpile following the blue arrows',
   ro: 'Plecați de la stocul {p} urmând săgețile albastre',
   pl: 'Odjedź od hałdy {p}, kierując się niebieskimi strzałkami',
+  pt: 'Saia do stock {p} seguindo as setas azuis',
 };
 const RETOUR_STEPS: Txt[] = [
   {
@@ -94,24 +98,28 @@ const RETOUR_STEPS: Txt[] = [
     en: 'Take the same track back up to the exit weighbridge',
     ro: 'Reluați aceeași pistă pentru a urca la cântarul de ieșire',
     pl: 'Wróć tą samą drogą do wagi wyjazdowej',
+    pt: 'Volte pela mesma pista para subir à báscula de saída',
   },
   {
     fr: 'Passage OBLIGATOIRE dans le laveur de roues',
     en: 'MANDATORY pass through the wheel wash',
     ro: 'Trecere OBLIGATORIE prin spălătoria de roți',
     pl: 'OBOWIĄZKOWY przejazd przez myjnię kół',
+    pt: 'Passagem OBRIGATÓRIA pelo lava-rodas',
   },
   {
     fr: 'Pesée à la bascule de sortie',
     en: 'Weigh out at the exit weighbridge',
     ro: 'Cântărire la cântarul de ieșire',
     pl: 'Ważenie na wadze wyjazdowej',
+    pt: 'Pesagem na báscula de saída',
   },
   {
     fr: 'Bâchage après la bascule de sortie, puis sortie du site',
     en: 'Sheet (tarp) the load after the exit weighbridge, then leave the site',
     ro: 'Acoperiți încărcătura cu prelata după cântarul de ieșire, apoi ieșiți din carieră',
     pl: 'Plandekowanie ładunku za wagą wyjazdową, potem wyjazd z terenu',
+    pt: 'Cobertura com lona depois da báscula de saída e depois saída do local',
   },
 ];
 
@@ -122,36 +130,42 @@ const VIA = {
     en: 'At the end of the track, turn into the lane between the two rows of top stockpiles',
     ro: 'La capătul pistei, intrați pe aleea dintre cele două rânduri de stocuri de sus',
     pl: 'Na końcu drogi skręć w alejkę między dwoma rzędami górnych hałd',
+    pt: 'No fim da pista, vire para a alameda entre as duas filas de stocks de cima',
   },
   hangar: {
     fr: 'Au bout de la piste, prendre l’allée devant le hangar',
     en: 'At the end of the track, take the lane in front of the shed',
     ro: 'La capătul pistei, luați aleea din fața hangarului',
     pl: 'Na końcu drogi wjedź w alejkę przed hangarem',
+    pt: 'No fim da pista, siga pela alameda em frente ao hangar',
   },
   cases: {
     fr: 'Longer la zone d’attente trémie, puis prendre la piste vers les cases sous le hangar',
     en: 'Drive along the hopper waiting area, then take the track to the bays below the shed',
     ro: 'Mergeți pe lângă zona de așteptare a buncărului, apoi luați pista spre boxele de sub hangar',
     pl: 'Jedź wzdłuż strefy oczekiwania do kosza, a potem drogą do boksów pod hangarem',
+    pt: 'Siga ao longo da zona de espera da tremonha e depois pela pista até às boxes debaixo do hangar',
   },
   descente: {
     fr: 'Longer la zone d’attente trémie, puis descendre la piste ouest',
     en: 'Drive along the hopper waiting area, then go down the west track',
     ro: 'Mergeți pe lângă zona de așteptare a buncărului, apoi coborâți pista de vest',
     pl: 'Jedź wzdłuż strefy oczekiwania do kosza, a potem zjedź zachodnią drogą',
+    pt: 'Siga ao longo da zona de espera da tremonha e depois desça pela pista oeste',
   },
   ouest: {
     fr: 'Longer la zone d’attente trémie, descendre la piste jusqu’en bas, puis remonter par la voie ouest',
     en: 'Drive along the hopper waiting area, go down to the bottom, then come back up the west lane',
     ro: 'Mergeți pe lângă zona de așteptare, coborâți pista până jos, apoi urcați pe aleea de vest',
     pl: 'Jedź wzdłuż strefy oczekiwania, zjedź na dół, a potem wróć w górę zachodnią alejką',
+    pt: 'Siga ao longo da zona de espera da tremonha, desça a pista até ao fundo e depois suba pela via oeste',
   },
   bas: {
     fr: 'Longer la zone d’attente trémie, descendre la piste, puis prendre l’allée des stocks du bas',
     en: 'Drive along the hopper waiting area, go down the track, then take the lane of the bottom stockpiles',
     ro: 'Mergeți pe lângă zona de așteptare, coborâți pista, apoi luați aleea stocurilor de jos',
     pl: 'Jedź wzdłuż strefy oczekiwania, zjedź drogą, a potem wjedź w alejkę dolnych hałd',
+    pt: 'Siga ao longo da zona de espera da tremonha, desça a pista e depois siga pela alameda dos stocks de baixo',
   },
 } satisfies Record<string, Txt>;
 
@@ -197,7 +211,7 @@ function product(spec: Spec, label: string): Product {
     area: spec.id,
     aller: {
       id: `${spec.id}--aller`,
-      label: fill({ fr: 'Aller vers {p}', en: 'To {p}', ro: 'Spre {p}', pl: 'Dojazd do {p}' }, label),
+      label: fill({ fr: 'Aller vers {p}', en: 'To {p}', ro: 'Spre {p}', pl: 'Dojazd do {p}', pt: 'Ida até {p}' }, label),
       color: JAUNE,
       d: smoothPath(aller),
       steps: [PESEE_ENTREE, PISTE_GAUCHE, VIA[spec.via], fill(ARRET, label)],
@@ -205,7 +219,7 @@ function product(spec: Spec, label: string): Product {
     },
     retour: {
       id: `${spec.id}--retour`,
-      label: fill({ fr: 'Retour depuis {p}', en: 'Back from {p}', ro: 'Întoarcere de la {p}', pl: 'Powrót od {p}' }, label),
+      label: fill({ fr: 'Retour depuis {p}', en: 'Back from {p}', ro: 'Întoarcere de la {p}', pl: 'Powrót od {p}', pt: 'Volta de {p}' }, label),
       color: BLEU,
       d: smoothPath(retour),
       steps: [fill(DEPART, label), ...RETOUR_STEPS],
@@ -227,15 +241,15 @@ const BAS_RETOUR: Leg[] = [ALLEE_BAS_OUEST, REMONTEE, SORTIE_OUEST, SORTIE];
 const OUEST_ALLER: Leg[] = [ENTREE, ATTENTE, DESCENTE, VOIE_OUEST];
 const OUEST_RETOUR: Leg[] = [VOIE_OUEST, { line: SORTIE_OUEST, from: [128, 180] }, SORTIE];
 
-const RANGEE_HAUT = { fr: 'rangée du haut', en: 'top row', ro: 'rândul de sus', pl: 'górny rząd' };
-const RANGEE_2 = { fr: '2e rangée', en: '2nd row', ro: 'rândul 2', pl: '2. rząd' };
-const SILO = { fr: 'près du silo', en: 'by the silo', ro: 'lângă siloz', pl: 'przy silosie' };
-const CASE = { fr: 'case sous le hangar', en: 'bay below the shed', ro: 'boxă sub hangar', pl: 'boks pod hangarem' };
-const OUEST = { fr: 'côté ouest', en: 'west side', ro: 'partea de vest', pl: 'strona zachodnia' };
+const RANGEE_HAUT = { fr: 'rangée du haut', en: 'top row', ro: 'rândul de sus', pl: 'górny rząd', pt: 'fila de cima' };
+const RANGEE_2 = { fr: '2e rangée', en: '2nd row', ro: 'rândul 2', pl: '2. rząd', pt: '2.ª fila' };
+const SILO = { fr: 'près du silo', en: 'by the silo', ro: 'lângă siloz', pl: 'przy silosie', pt: 'junto ao silo' };
+const CASE = { fr: 'case sous le hangar', en: 'bay below the shed', ro: 'boxă sub hangar', pl: 'boks pod hangarem', pt: 'box debaixo do hangar' };
+const OUEST = { fr: 'côté ouest', en: 'west side', ro: 'partea de vest', pl: 'strona zachodnia', pt: 'lado oeste' };
 
 const groups: { label: Txt; specs: (Spec & { label: string })[] }[] = [
   {
-    label: { fr: 'Stocks du haut', en: 'Top stockpiles', ro: 'Stocurile de sus', pl: 'Hałdy górne' },
+    label: { fr: 'Stocks du haut', en: 'Top stockpiles', ro: 'Stocurile de sus', pl: 'Hałdy górne', pt: 'Stocks de cima' },
     specs: [
       { id: 'surcharge', label: 'SUR CHARGE', stop: [220, 123], via: 'haut', aller: HAUT_ALLER, retour: [ALLEE_HAUT, MONTEE_SILO, SORTIE] },
       { id: '4-20-r1v-haut', label: '4-20 R1V', hint: RANGEE_HAUT, stop: [298, 123], via: 'haut', aller: HAUT_ALLER, retour: [ALLEE_HAUT, MONTEE_SILO, SORTIE] },
@@ -248,7 +262,7 @@ const groups: { label: Txt; specs: (Spec & { label: string })[] }[] = [
     ],
   },
   {
-    label: { fr: 'Autour du hangar', en: 'Around the shed', ro: 'În jurul hangarului', pl: 'Wokół hangaru' },
+    label: { fr: 'Autour du hangar', en: 'Around the shed', ro: 'În jurul hangarului', pl: 'Wokół hangaru', pt: 'À volta do hangar' },
     specs: [
       { id: '0-20-plv', label: '0-20 PLV', stop: [232, 157], via: 'hangar', aller: HANGAR_ALLER, retour: [ALLEE_HANGAR, MONTEE_SILO, SORTIE] },
       { id: '0-4-r1v-case', label: '0-4 R1V', hint: CASE, stop: [279, 268], via: 'cases', aller: [ENTREE, ATTENTE, CASES_ALLER], retour: [CASES_RETOUR, SORTIE_OUEST, SORTIE] },
@@ -256,7 +270,7 @@ const groups: { label: Txt; specs: (Spec & { label: string })[] }[] = [
     ],
   },
   {
-    label: { fr: 'Côté ouest', en: 'West side', ro: 'Partea de vest', pl: 'Strona zachodnia' },
+    label: { fr: 'Côté ouest', en: 'West side', ro: 'Partea de vest', pl: 'Strona zachodnia', pt: 'Lado oeste' },
     specs: [
       { id: '0-4-tlv', label: '0-4 TLV', stop: [106, 290], via: 'ouest', aller: OUEST_ALLER, retour: OUEST_RETOUR },
       { id: '0-4-r1v', label: '0-4 R1V', hint: OUEST, stop: [108, 342], via: 'ouest', aller: OUEST_ALLER, retour: OUEST_RETOUR },
@@ -274,7 +288,7 @@ const groups: { label: Txt; specs: (Spec & { label: string })[] }[] = [
     ],
   },
   {
-    label: { fr: 'Stocks du bas', en: 'Bottom stockpiles', ro: 'Stocurile de jos', pl: 'Hałdy dolne' },
+    label: { fr: 'Stocks du bas', en: 'Bottom stockpiles', ro: 'Stocurile de jos', pl: 'Hałdy dolne', pt: 'Stocks de baixo' },
     specs: [
       { id: '0-31-5-ou-0-4-sv', label: '0-31.5 SV ou 0-4 SV', stop: [350, 455], via: 'bas', aller: BAS_ALLER, retour: BAS_RETOUR },
       { id: '4-20-plv', label: '4-20 PLV*', stop: [413, 455], via: 'bas', aller: BAS_ALLER, retour: BAS_RETOUR },

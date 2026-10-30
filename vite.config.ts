@@ -33,6 +33,8 @@ export default defineConfig({
     // `rolldownOptions` est le nouveau nom de `rollupOptions` depuis Vite 8
     rolldownOptions: {
       input: {
+        // Page d'accueil (QR code unique) qui renvoie vers les deux plans
+        accueil: fileURLToPath(new URL('./index.html', import.meta.url)),
         'plan-1': page('plan-1'),
         'plan-2': page('plan-2'),
       },

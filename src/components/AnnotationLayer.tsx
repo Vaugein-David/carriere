@@ -37,7 +37,8 @@ function AreaLabel({ area, fill }: { area: AnnotationArea; fill: string }) {
   if (!area.label) return null;
   const { x, y, w, h } = bbox(area);
   const lines = t(area.label).split('\n');
-  const longest = Math.max(...lines.map((l) => l.length));
+  // Largeur estimée en em : les majuscules en gras sont plus larges que la moyenne
+  const longest = Math.max(...lines.map((l) => [...l].reduce((s, c) => s + (/\p{Lu}/u.test(c) ? 0.74 : 0.62), 0) / 0.62));
   // Taille ajustée à la surface (en sens de lecture), plafonnée
   const along = area.vertical ? h : w;
   const across = area.vertical ? w : h;
