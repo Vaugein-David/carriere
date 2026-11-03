@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import type { InfoItem } from '../types';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { IconClose } from './Icons';
+import { LinkedText } from './PageLink';
 import { ui, useT } from '../i18n';
 
 interface Props {
@@ -84,7 +85,11 @@ export function InfoSheet({ item, onClose }: Props) {
         </button>
       </div>
       {shown.provisoire && <p className="badge-provisoire">{t(ui.infoToConfirm)}</p>}
-      {shown.description && <p className="info-sheet__desc">{shown.description}</p>}
+      {shown.description && (
+        <p className="info-sheet__desc">
+          <LinkedText text={shown.description} />
+        </p>
+      )}
       {shown.consigne && (
         <p className="info-sheet__consigne">
           <strong>{t(ui.instruction)}</strong> {shown.consigne}

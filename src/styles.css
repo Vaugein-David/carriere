@@ -1310,3 +1310,31 @@ h1 {
   height: 28px;
   transform: rotate(-90deg);
 }
+
+/* Bouton vers une autre page, dans une étape, une consigne ou une fiche */
+.page-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 52px;
+  margin-top: 10px;
+  padding: 10px 14px;
+  border: 2px solid #000;
+  border-radius: 12px;
+  background: var(--yellow);
+  color: var(--on-yellow);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.page-link .icon {
+  flex: none;
+  transform: rotate(-90deg);
+}
+
+/* Étape en cours (fond jaune) : le bouton passe en noir pour rester visible */
+.step.is-current .page-link {
+  background: #000;
+  color: #fff;
+}

@@ -123,5 +123,12 @@ export const ui = {
   chooseProduct: { fr: 'Choisir un produit', en: 'Choose a product', ro: 'Alegeți un produs', pl: 'Wybierz produkt', pt: 'Escolher um produto' },
   aller: { fr: 'Aller', en: 'There', ro: 'Dus', pl: 'Dojazd', pt: 'Ida' },
   retour: { fr: 'Retour', en: 'Back', ro: 'Întors', pl: 'Powrót', pt: 'Volta' },
+  hopperPage: {
+    fr: 'Voir le fonctionnement de la trémie',
+    en: 'How to use the hopper',
+    ro: 'Vedeți funcționarea buncărului',
+    pl: 'Zobacz obsługę kosza',
+    pt: 'Ver o funcionamento da tremonha',
+  },
   legChoice: { fr: 'Sens du trajet', en: 'Direction', ro: 'Sensul traseului', pl: 'Kierunek', pt: 'Sentido do trajeto' },
 } satisfies Record<string, Txt>;

@@ -2,6 +2,7 @@ import { useRef, useState, type CSSProperties } from 'react';
 import type { Hotspot, Product, ProductGroup, Route, Rule } from '../types';
 import { ui, useT } from '../i18n';
 import { IconChevron } from './Icons';
+import { LinkedText } from './PageLink';
 
 export function RouteChips({
   routes,
@@ -139,7 +140,9 @@ export function RouteSteps({ route, current }: { route: Route | undefined; curre
             <span className="step-num" aria-hidden="true">
               {i + 1}
             </span>
-            <span className="step-text">{t(s)}</span>
+            <span className="step-text">
+              <LinkedText text={t(s)} />
+            </span>
           </li>
         ))}
       </ol>
@@ -177,7 +180,9 @@ export function SafetyRules({ rules }: { rules: Rule[] }) {
         {rules.map((r, i) => (
           <li key={i} className="rule">
             <strong className="rule-title">{t(r.title)}</strong>
-            <span className="rule-text">{t(r.text)}</span>
+            <span className="rule-text">
+              <LinkedText text={t(r.text)} />
+            </span>
             {r.provisoire && <span className="badge-provisoire">{t(ui.toConfirm)}</span>}
           </li>
         ))}

@@ -1,5 +1,5 @@
 import type { Product, ProductGroup } from '../types';
-import { LANGS, type Txt } from '../i18n';
+import { LANGS, tr, type Txt } from '../i18n';
 import { joinPolylines, polylineLength, projectOnPolyline, slicePolyline, smoothPath, type Point } from '../lib/geometry';
 
 /**
@@ -58,9 +58,9 @@ const SORTIE: Line = [
 // ---------- Textes ----------
 
 /** Remplace {p} par le nom du produit dans toutes les langues */
-function fill(txt: Exclude<Txt, string>, p: string): Txt {
-  const out = { fr: txt.fr.replaceAll('{p}', p) } as Exclude<Txt, string>;
-  for (const l of LANGS) if (l !== 'fr' && txt[l]) out[l] = txt[l]!.replaceAll('{p}', p);
+function fill(txt: Exclude<Txt, string>, p: Txt): Txt {
+  const out = { fr: txt.fr.replaceAll('{p}', tr(p, 'fr')) } as Exclude<Txt, string>;
+  for (const l of LANGS) if (l !== 'fr' && txt[l]) out[l] = txt[l]!.replaceAll('{p}', tr(p, l));
   return out;
 }
 
@@ -182,6 +182,8 @@ interface Spec {
   aller: Leg[];
   retour: Leg[];
   hint?: Txt;
+  /** Stock à faire clignoter, si plusieurs produits partagent le même (par défaut `id`) */
+  area?: string;
 }
 
 function assemble(legs: Leg[], stop: Point, cut: 'end' | 'start'): Point[] {
@@ -201,6 +203,9 @@ function fractionAt(pts: Point[], p: Point) {
 }
 
 function product(spec: Spec, label: string): Product {
+  // Nom complet dans les étapes : « 0-4 PLV (côté trémie) »
+  const hint = spec.hint;
+  const name: Txt = hint ? (Object.fromEntries(LANGS.map((l) => [l, `${label} (${tr(hint, l)})`])) as Exclude<Txt, string>) : label;
   const aller = assemble(spec.aller, spec.stop, 'end');
   const retour = assemble(spec.retour, spec.stop, 'start');
   const L = polylineLength(aller);
@@ -208,21 +213,21 @@ function product(spec: Spec, label: string): Product {
     id: spec.id,
     label,
     hint: spec.hint,
-    area: spec.id,
+    area: spec.area ?? spec.id,
     aller: {
       id: `${spec.id}--aller`,
-      label: fill({ fr: 'Aller vers {p}', en: 'To {p}', ro: 'Spre {p}', pl: 'Dojazd do {p}', pt: 'Ida até {p}' }, label),
+      label: fill({ fr: 'Aller vers {p}', en: 'To {p}', ro: 'Spre {p}', pl: 'Dojazd do {p}', pt: 'Ida até {p}' }, name),
       color: JAUNE,
       d: smoothPath(aller),
-      steps: [PESEE_ENTREE, PISTE_GAUCHE, VIA[spec.via], fill(ARRET, label)],
+      steps: [PESEE_ENTREE, PISTE_GAUCHE, VIA[spec.via], fill(ARRET, name)],
       stepAt: [0, fractionAt(aller, [910, 300]), fractionAt(aller, [206, 78]), Math.max(0.9, 1 - 40 / L)],
     },
     retour: {
       id: `${spec.id}--retour`,
-      label: fill({ fr: 'Retour depuis {p}', en: 'Back from {p}', ro: 'Întoarcere de la {p}', pl: 'Powrót od {p}', pt: 'Volta de {p}' }, label),
+      label: fill({ fr: 'Retour depuis {p}', en: 'Back from {p}', ro: 'Întoarcere de la {p}', pl: 'Powrót od {p}', pt: 'Volta de {p}' }, name),
       color: BLEU,
       d: smoothPath(retour),
-      steps: [fill(DEPART, label), ...RETOUR_STEPS],
+      steps: [fill(DEPART, name), ...RETOUR_STEPS],
       stepAt: [
         0,
         Math.min(0.1, 40 / polylineLength(retour)),
@@ -241,22 +246,21 @@ const BAS_RETOUR: Leg[] = [ALLEE_BAS_OUEST, REMONTEE, SORTIE_OUEST, SORTIE];
 const OUEST_ALLER: Leg[] = [ENTREE, ATTENTE, DESCENTE, VOIE_OUEST];
 const OUEST_RETOUR: Leg[] = [VOIE_OUEST, { line: SORTIE_OUEST, from: [128, 180] }, SORTIE];
 
-const RANGEE_HAUT = { fr: 'rangée du haut', en: 'top row', ro: 'rândul de sus', pl: 'górny rząd', pt: 'fila de cima' };
-const RANGEE_2 = { fr: '2e rangée', en: '2nd row', ro: 'rândul 2', pl: '2. rząd', pt: '2.ª fila' };
-const SILO = { fr: 'près du silo', en: 'by the silo', ro: 'lângă siloz', pl: 'przy silosie', pt: 'junto ao silo' };
+const SILO = { fr: 'silo', en: 'silo', ro: 'siloz', pl: 'silos', pt: 'silo' };
 const CASE = { fr: 'case sous le hangar', en: 'bay below the shed', ro: 'boxă sub hangar', pl: 'boks pod hangarem', pt: 'box debaixo do hangar' };
-const OUEST = { fr: 'côté ouest', en: 'west side', ro: 'partea de vest', pl: 'strona zachodnia', pt: 'lado oeste' };
+const COTE_TREMIE = { fr: 'côté trémie', en: 'hopper end', ro: 'capătul dinspre buncăr', pl: 'od strony kosza', pt: 'lado da tremonha' };
+const COTE_0_31_5 = { fr: 'côté 0-31.5', en: '0-31.5 end', ro: 'capătul dinspre 0-31.5', pl: 'od strony 0-31.5', pt: 'lado do 0-31.5' };
 
 const groups: { label: Txt; specs: (Spec & { label: string })[] }[] = [
   {
     label: { fr: 'Stocks du haut', en: 'Top stockpiles', ro: 'Stocurile de sus', pl: 'Hałdy górne', pt: 'Stocks de cima' },
     specs: [
       { id: 'surcharge', label: 'SUR CHARGE', stop: [220, 123], via: 'haut', aller: HAUT_ALLER, retour: [ALLEE_HAUT, MONTEE_SILO, SORTIE] },
-      { id: '4-20-r1v-haut', label: '4-20 R1V', hint: RANGEE_HAUT, stop: [298, 123], via: 'haut', aller: HAUT_ALLER, retour: [ALLEE_HAUT, MONTEE_SILO, SORTIE] },
+      { id: '4-20-r1v-haut', label: '4-20 R1V', stop: [298, 123], via: 'haut', aller: HAUT_ALLER, retour: [ALLEE_HAUT, MONTEE_SILO, SORTIE] },
       { id: '10-20-tlv-stock', label: '10-20 TLV STOCK', stop: [400, 123], via: 'haut', aller: HAUT_ALLER, retour: [ALLEE_HAUT, MONTEE_SILO, SORTIE] },
       { id: '4-10-tlv-stock', label: '4-10 TLV STOCK', stop: [489, 129], via: 'haut', aller: HAUT_ALLER, retour: [ALLEE_HAUT, MONTEE_SILO, SORTIE] },
       { id: '4-16-r1v', label: '4-16 R1V', stop: [343, 168], via: 'hangar', aller: HANGAR_ALLER, retour: [ALLEE_HANGAR, MONTEE_SILO, SORTIE] },
-      { id: '4-20-r1v-bas', label: '4-20 R1V', hint: RANGEE_2, stop: [411, 168], via: 'hangar', aller: HANGAR_ALLER, retour: [ALLEE_HANGAR, MONTEE_SILO, SORTIE] },
+      // Pas de chargement au 4-20 R1V de la 2e rangée pour le moment
       { id: '4-10-tlv', label: '4-10 TLV', hint: SILO, stop: [518, 131], via: 'haut', aller: [...HAUT_ALLER, MONTEE_SILO], retour: [MONTEE_SILO, SORTIE] },
       { id: '10-20-tlv', label: '10-20 TLV', hint: SILO, stop: [552, 118], via: 'haut', aller: [...HAUT_ALLER, MONTEE_SILO], retour: [MONTEE_SILO, SORTIE] },
     ],
@@ -273,7 +277,7 @@ const groups: { label: Txt; specs: (Spec & { label: string })[] }[] = [
     label: { fr: 'Côté ouest', en: 'West side', ro: 'Partea de vest', pl: 'Strona zachodnia', pt: 'Lado oeste' },
     specs: [
       { id: '0-4-tlv', label: '0-4 TLV', stop: [106, 290], via: 'ouest', aller: OUEST_ALLER, retour: OUEST_RETOUR },
-      { id: '0-4-r1v', label: '0-4 R1V', hint: OUEST, stop: [108, 342], via: 'ouest', aller: OUEST_ALLER, retour: OUEST_RETOUR },
+      { id: '0-4-r1v', label: '0-4 R1V STOCK', stop: [108, 342], via: 'ouest', aller: OUEST_ALLER, retour: OUEST_RETOUR },
       { id: '0-20-r1v', label: '0-20 R1V', stop: [121, 466], via: 'ouest', aller: OUEST_ALLER, retour: OUEST_RETOUR },
       {
         id: '0-80-pv',
@@ -284,7 +288,9 @@ const groups: { label: Txt; specs: (Spec & { label: string })[] }[] = [
         retour: [PV_RETOUR, { line: VOIE_OUEST, from: [124, 520] }, { line: SORTIE_OUEST, from: [128, 180] }, SORTIE],
       },
       { id: '0-1-bu', label: '0-1 BU', stop: [171, 305], via: 'descente', aller: [ENTREE, ATTENTE, DESCENTE], retour: [REMONTEE, SORTIE_OUEST, SORTIE] },
-      { id: '0-4-plv', label: '0-4 PLV', stop: [204, 425], via: 'descente', aller: [ENTREE, ATTENTE, DESCENTE], retour: [REMONTEE, SORTIE_OUEST, SORTIE] },
+      // Le 0-4 PLV se charge par ses deux extrémités
+      { id: '0-4-plv-tremie', area: '0-4-plv', label: '0-4 PLV', hint: COTE_TREMIE, stop: [182, 318], via: 'descente', aller: [ENTREE, ATTENTE, DESCENTE], retour: [REMONTEE, SORTIE_OUEST, SORTIE] },
+      { id: '0-4-plv-0-31-5', area: '0-4-plv', label: '0-4 PLV', hint: COTE_0_31_5, stop: [318, 462], via: 'bas', aller: BAS_ALLER, retour: BAS_RETOUR },
     ],
   },
   {
