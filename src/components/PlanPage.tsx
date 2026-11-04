@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { InfoItem, PlanData } from '../types';
 import { PlanViewer, type PlanViewerHandle } from './PlanViewer';
 import { InfoSheet } from './InfoSheet';
+import { SignLink } from './PageLink';
 import { ProductPicker, RouteChips, RouteSteps, SafetyRules, ZoneList, type Leg } from './PageSections';
 import { LangSwitcher, ui, useT, type Txt } from '../i18n';
 
@@ -104,6 +105,7 @@ export function PlanPage({ data }: { data: PlanData }) {
         <p className="eyebrow">{t(data.eyebrow)}</p>
         <h1>{t(data.title)}</h1>
         <p className="lead">{t(data.description)}</p>
+        <SignLink />
       </header>
 
       <main className="page-main">

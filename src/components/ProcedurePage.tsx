@@ -1,6 +1,7 @@
 import { useEffect, type ReactNode } from 'react';
 import type { ProcedureData } from '../types';
 import { IconAttention, IconPhone } from './Icons';
+import { SignLink } from './PageLink';
 import { LangSwitcher, ui, useT } from '../i18n';
 
 /** Mise en forme légère : **gras** et [[badge]] (étiquette verte de l'affiche) */
@@ -43,6 +44,7 @@ export function ProcedurePage({ data }: { data: ProcedureData }) {
           <RichText text={t(data.title)} />
         </h1>
         <p className="lead">{t(data.description)}</p>
+        <SignLink />
       </header>
 
       <main className="page-main procedure">
