@@ -74,7 +74,7 @@ function SignatureForm() {
       });
       const data = await res.json();
       if (!data.ok) throw new Error(data.error);
-      const r = { version: signatureConfig.version, code: data.code, date: data.date };
+      const r = { version: signatureConfig.version, date: data.date };
       saveSigned(r);
       setRecord(r);
       window.scrollTo(0, 0);
@@ -101,8 +101,6 @@ function SignatureForm() {
       <main className="page-main sign">
         <section className="card sign-done" role="status">
           <h2>{t(sig.doneTitle)}</h2>
-          <p>{t(sig.doneText)}</p>
-          <p className="sign-code">{record.code}</p>
           <p>
             {t(sig.signedOn)} {record.date} · {t(sig.version)} {record.version}
           </p>

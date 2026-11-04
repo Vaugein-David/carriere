@@ -64,7 +64,7 @@ Le menu « Itinéraire vers un produit » vient de [`src/data/plan-1-produits.ts
 
 ## Signature des chauffeurs
 
-La page `/carriere/signature/` fait signer le plan et les consignes au doigt. Le script `apps-script/Code.gs` enregistre chaque signature dans Google Sheets et Google Drive, avec un PDF de preuve, et renvoie un code à montrer à la bascule.
+La page `/carriere/signature/` fait signer le plan et les consignes au doigt. Le script `apps-script/Code.gs` enregistre chaque signature dans Google Sheets et Google Drive, avec un PDF de preuve. Chaque ligne porte un code de référence, qui n'est pas montré au chauffeur.
 
 - **Installation** : voir [`apps-script/INSTALLATION.md`](apps-script/INSTALLATION.md). Tant que `url` et `responsable` sont vides dans [`src/data/signature.ts`](src/data/signature.ts), la page reste inactive et le bouton n'apparaît pas à l'accueil.
 - **Nouvelles consignes** : changez `version` dans ce même fichier, sinon les chauffeurs signeront sous l'ancien numéro.

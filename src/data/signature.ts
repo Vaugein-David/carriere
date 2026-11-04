@@ -80,13 +80,6 @@ export const sig = {
     pt: 'Estes dados são conservados sem limite de tempo.',
   },
   doneTitle: { fr: 'Signature enregistrée', en: 'Signature saved', ro: 'Semnătură înregistrată', pl: 'Podpis zapisany', pt: 'Assinatura guardada' },
-  doneText: {
-    fr: 'Montrez ce code à la bascule lors de votre passage.',
-    en: 'Show this code at the weighbridge when you arrive.',
-    ro: 'Arătați acest cod la cântar când ajungeți.',
-    pl: 'Pokaż ten kod na wadze podczas wjazdu.',
-    pt: 'Mostre este código na báscula quando passar.',
-  },
   signedOn: { fr: 'Signé le', en: 'Signed on', ro: 'Semnat la', pl: 'Podpisano', pt: 'Assinado em' },
   another: { fr: 'Signer pour un autre chauffeur', en: 'Sign for another driver', ro: 'Semnați pentru alt șofer', pl: 'Podpisz dla innego kierowcy', pt: 'Assinar para outro motorista' },
   home: { fr: 'Retour à l’accueil', en: 'Back to home', ro: 'Înapoi la pagina principală', pl: 'Powrót do strony głównej', pt: 'Voltar à página inicial' },

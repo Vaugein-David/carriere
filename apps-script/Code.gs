@@ -4,7 +4,7 @@
  * Reçoit la signature envoyée par la page /carriere/signature/, puis :
  *  - enregistre l'image de la signature et un PDF de preuve dans Google Drive ;
  *  - ajoute une ligne au tableau Google Sheets ;
- *  - renvoie au chauffeur un code de confirmation.
+ *  - attribue un code de référence à la signature (non affiché au chauffeur).
  *
  * Installation : voir apps-script/INSTALLATION.md.
  * Ce script ne relève ni l'adresse IP ni la position du téléphone.

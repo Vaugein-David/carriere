@@ -1503,19 +1503,6 @@ h1 {
   margin: 8px 0 0;
 }
 
-.sign-done .sign-code {
-  margin-block: 14px;
-  padding: 14px;
-  border: 3px solid #000;
-  border-radius: 12px;
-  background: var(--yellow);
-  color: var(--on-yellow);
-  font-size: 34px;
-  font-weight: 900;
-  letter-spacing: 0.06em;
-  text-align: center;
-}
-
 .home-link--sign .home-num {
   background: #0a7a35;
   color: #fff;

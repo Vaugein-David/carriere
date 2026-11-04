@@ -2,7 +2,6 @@ import { signatureConfig } from '../data/signature';
 
 export interface SignedRecord {
   version: string;
-  code: string;
   date: string;
 }
 

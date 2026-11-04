@@ -88,7 +88,7 @@ function Accueil() {
                 </span>
                 <span className="home-text">
                   <strong>{t(sig.homeTitle)}</strong>
-                  <span>{signed ? `${t(sig.homeDone)} · ${signed.code}` : t(sig.homeText)}</span>
+                  <span>{signed ? t(sig.homeDone) : t(sig.homeText)}</span>
                 </span>
                 <IconChevron />
               </a>

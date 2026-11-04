@@ -40,7 +40,7 @@ Publiez ensuite le site. Faites une signature d'essai et vérifiez que la ligne,
 
 ## Au quotidien
 
-- **Vérifier un chauffeur** : cherchez son code ou son nom dans le tableau (Ctrl + F). La colonne **Contrôle bascule** est libre pour noter la vérification.
+- **Vérifier un chauffeur** : cherchez son nom ou sa plaque dans le tableau (Ctrl + F). La colonne **Contrôle bascule** est libre pour noter la vérification.
 - **Donner accès à la bascule** : partagez le tableau en tant qu'**éditeur**. Les autres colonnes restent protégées : seul le compte propriétaire peut les modifier. Limitez cet accès à 1 ou 2 personnes.
 - **Ne partagez jamais le dossier Drive par lien public** : il contient des données personnelles.
 - **Nouvelles consignes ou nouveau plan** : changez `version` dans `src/data/signature.ts`, puis publiez. Les chauffeurs peuvent signer la nouvelle version, et l'historique Git garde le contenu exact de chaque version, plan compris.
