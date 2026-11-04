@@ -37,6 +37,7 @@ export default defineConfig({
         accueil: fileURLToPath(new URL('./index.html', import.meta.url)),
         'plan-1': page('plan-1'),
         'plan-2': page('plan-2'),
+        signature: page('signature'),
       },
     },
   },

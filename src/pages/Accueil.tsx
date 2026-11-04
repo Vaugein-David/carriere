@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { IconChevron } from '../components/Icons';
+import { sig, signatureActive } from '../data/signature';
 import { LangProvider, LangSwitcher, ui, useT, type Txt } from '../i18n';
+import { readSigned } from '../lib/signed';
 
 /** Page d'accueil (QR code unique) : renvoie vers les deux plans */
 const PAGES: { href: string; num: string; title: Txt; text: Txt }[] = [
@@ -47,6 +49,7 @@ const LEAD: Txt = {
 
 function Accueil() {
   const t = useT();
+  const signed = readSigned();
 
   useEffect(() => {
     document.title = `${t(TITLE)} — ${t(ui.site)}`;
@@ -77,6 +80,20 @@ function Accueil() {
               </a>
             </li>
           ))}
+          {signatureActive() && (
+            <li>
+              <a className="home-link home-link--sign" href={`${import.meta.env.BASE_URL}signature/`}>
+                <span className="home-num" aria-hidden="true">
+                  ✓
+                </span>
+                <span className="home-text">
+                  <strong>{t(sig.homeTitle)}</strong>
+                  <span>{signed ? `${t(sig.homeDone)} · ${signed.code}` : t(sig.homeText)}</span>
+                </span>
+                <IconChevron />
+              </a>
+            </li>
+          )}
         </ul>
       </main>
     </>

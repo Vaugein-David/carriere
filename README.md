@@ -7,6 +7,7 @@ Site statique de deux pages, avec une page d'accueil qui renvoie vers les deux :
 | `/carriere/` | Accueil : deux gros boutons vers les plans | `src/pages/Accueil.tsx` | aucune |
 | `/carriere/plan-1/` | Plan de circulation de la cour | `src/data/plan-1.ts` | `src/assets/plan-1.webp` |
 | `/carriere/plan-2/` | Poste de chargement (trémie) | `src/data/plan-2.ts` | aucune (texte seul) |
+| `/carriere/signature/` | Signature du plan et des consignes | `src/data/signature.ts` | photo du plan 1 |
 
 La page 2 est une page simple qui retranscrit l'affiche du poste de chargement : les 6 étapes et l'info sur l'attente. L'affiche d'origine est conservée dans `sources/plan-2-affiche.webp` (non publiée). Les textes se modifient dans `src/data/plan-2.ts` (`**gras**`, `[[badge]]` pour l'étiquette verte).
 
@@ -60,6 +61,13 @@ Le menu « Itinéraire vers un produit » vient de [`src/data/plan-1-produits.ts
 
 - **Ajouter un produit** : donnez un `id` à son stock dans les annotations, puis ajoutez une ligne dans le bon groupe en copiant un voisin du même secteur et en changeant `stop`.
 - **Retirer un produit** : supprimez sa ligne.
+
+## Signature des chauffeurs
+
+La page `/carriere/signature/` fait signer le plan et les consignes au doigt. Le script `apps-script/Code.gs` enregistre chaque signature dans Google Sheets et Google Drive, avec un PDF de preuve, et renvoie un code à montrer à la bascule.
+
+- **Installation** : voir [`apps-script/INSTALLATION.md`](apps-script/INSTALLATION.md). Tant que `url` et `responsable` sont vides dans [`src/data/signature.ts`](src/data/signature.ts), la page reste inactive et le bouton n'apparaît pas à l'accueil.
+- **Nouvelles consignes** : changez `version` dans ce même fichier, sinon les chauffeurs signeront sous l'ancien numéro.
 
 ## Remplacer une image
 
