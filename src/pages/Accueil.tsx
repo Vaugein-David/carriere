@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { IconChevron } from '../components/Icons';
-import { sig, signatureActive } from '../data/signature';
+import { sig, signatureButtons } from '../data/signature';
 import { LangProvider, LangSwitcher, ui, useT, type Txt } from '../i18n';
 import { readSigned } from '../lib/signed';
 
@@ -80,7 +80,7 @@ function Accueil() {
               </a>
             </li>
           ))}
-          {signatureActive() && (
+          {signatureButtons() && (
             <li>
               <a className="home-link home-link--sign" href={`${import.meta.env.BASE_URL}signature/`}>
                 <span className="home-num" aria-hidden="true">

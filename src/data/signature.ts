@@ -15,9 +15,17 @@ export const signatureConfig = {
    * laquelle a été présentée.
    */
   version: '2026-11-04',
+  /**
+   * Boutons « Signer le plan et les consignes » de l'accueil et des plans 1 et 2.
+   * Mettre `true` pour les réafficher. La page /carriere/signature/ reste accessible dans tous les cas.
+   */
+  boutons: false,
 };
 
 export const signatureActive = () => signatureConfig.url !== '' && signatureConfig.responsable !== '';
+
+/** Les boutons vers la signature sont-ils affichés ? */
+export const signatureButtons = () => signatureActive() && signatureConfig.boutons;
 
 /** Textes de la page de signature */
 export const sig = {
