@@ -1,6 +1,6 @@
 import { useRef, useState, type CSSProperties } from 'react';
 import type { Hotspot, Product, ProductGroup, Route, Rule } from '../types';
-import { ui, useT } from '../i18n';
+import { tr, ui, useT } from '../i18n';
 import { IconChevron } from './Icons';
 import { LinkedText } from './PageLink';
 
@@ -37,6 +37,14 @@ export function RouteChips({
 export type Leg = 'aller' | 'retour';
 
 /** Menu dépliant : choix d'un produit, puis du sens (aller ou retour) */
+/** Forme comparable d'un nom de produit : « 0/4 PLV », « 0-4plv » et « 04 plv » donnent « 04plv » */
+const searchKey = (s: string) =>
+  s
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[\s\-/.,_*]+/g, '');
+
 export function ProductPicker({
   groups,
   product,
@@ -52,7 +60,25 @@ export function ProductPicker({
 }) {
   const t = useT();
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
   const rootRef = useRef<HTMLElement>(null);
+
+  const q = searchKey(query);
+  const shown = groups
+    .map((g) => ({
+      ...g,
+      products: g.products.filter((p) => !q || searchKey(`${p.label} ${p.hint ? t(p.hint) : ''}`).includes(q)),
+    }))
+    .filter((g) => g.products.length > 0);
+  const matches = shown.flatMap((g) => g.products);
+
+  const choose = (id: string) => {
+    onProduct(id);
+    setOpen(false);
+    setQuery('');
+    // Le menu se referme : on remonte au choix aller / retour et au plan
+    requestAnimationFrame(() => rootRef.current?.scrollIntoView({ block: 'start' }));
+  };
   return (
     <section ref={rootRef} className={`product-picker${product ? ' is-active' : ''}`}>
       <button
@@ -73,8 +99,24 @@ export function ProductPicker({
       </button>
 
       <div id="product-menu" className="product-menu" hidden={!open}>
-        {groups.map((g, i) => (
-          <div key={i} className="product-group">
+        <input
+          type="search"
+          className="product-search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            // Entrée : choisit le produit s'il ne reste qu'un résultat
+            const only = matches.length === 1 ? matches[0] : undefined;
+            if (e.key === 'Enter' && only) choose(only.id);
+          }}
+          placeholder={t(ui.searchProduct)}
+          aria-label={t(ui.searchProduct)}
+          autoComplete="off"
+          enterKeyHint="search"
+        />
+        {shown.length === 0 && <p className="product-empty">{t(ui.noProduct)}</p>}
+        {shown.map((g) => (
+          <div key={tr(g.label, 'fr')} className="product-group">
             <h3>{t(g.label)}</h3>
             <ul className="product-grid">
               {g.products.map((p) => (
@@ -83,12 +125,7 @@ export function ProductPicker({
                     type="button"
                     className="product-btn"
                     aria-pressed={p.id === product?.id}
-                    onClick={() => {
-                      onProduct(p.id);
-                      setOpen(false);
-                      // Le menu se referme : on remonte au choix aller / retour et au plan
-                      requestAnimationFrame(() => rootRef.current?.scrollIntoView({ block: 'start' }));
-                    }}
+                    onClick={() => choose(p.id)}
                   >
                     {p.label}
                     {p.hint && <small>{t(p.hint)}</small>}

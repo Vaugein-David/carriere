@@ -59,6 +59,7 @@ Tout ce qui est dessiné sur la photo est dans [`src/data/plan-1-annotations.ts`
 
 Le menu « Itinéraire vers un produit » vient de [`src/data/plan-1-produits.ts`](src/data/plan-1-produits.ts). Les pistes y sont décrites une fois (lignes brisées dans le sens de circulation) ; chaque produit indique son point d'arrêt (`stop`) et les pistes de l'aller et du retour, et le tracé est calculé automatiquement. Le `id` d'un produit est celui de son stock dans `plan-1-annotations.ts`, qui clignote sur le plan quand on le choisit. Les stocks inaccessibles aux camions (barrés sur l'affiche) ne figurent pas dans la liste.
 
+- **Recherche** : le champ en haut du menu ignore les tirets, barres, points, virgules et espaces (« 0/4plv » trouve « 0-4 PLV »). Il cherche aussi dans la précision du produit (« silo », « trémie »).
 - **Ajouter un produit** : donnez un `id` à son stock dans les annotations, puis ajoutez une ligne dans le bon groupe en copiant un voisin du même secteur et en changeant `stop`.
 - **Retirer un produit** : supprimez sa ligne.
 

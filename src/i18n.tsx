@@ -121,6 +121,20 @@ export const ui = {
     pt: 'Percurso até um produto',
   },
   chooseProduct: { fr: 'Choisir un produit', en: 'Choose a product', ro: 'Alegeți un produs', pl: 'Wybierz produkt', pt: 'Escolher um produto' },
+  searchProduct: {
+    fr: 'Rechercher (ex. 0/4 PLV)',
+    en: 'Search (e.g. 0/4 PLV)',
+    ro: 'Căutare (ex. 0/4 PLV)',
+    pl: 'Szukaj (np. 0/4 PLV)',
+    pt: 'Procurar (ex. 0/4 PLV)',
+  },
+  noProduct: {
+    fr: 'Aucun produit ne correspond.',
+    en: 'No matching product.',
+    ro: 'Niciun produs nu corespunde.',
+    pl: 'Brak pasujących produktów.',
+    pt: 'Nenhum produto corresponde.',
+  },
   aller: { fr: 'Aller', en: 'There', ro: 'Dus', pl: 'Dojazd', pt: 'Ida' },
   retour: { fr: 'Retour', en: 'Back', ro: 'Întors', pl: 'Powrót', pt: 'Volta' },
   hopperPage: {

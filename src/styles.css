@@ -213,6 +213,25 @@ h1 {
   border-top: 1px solid var(--divider);
 }
 
+.product-search {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 12px;
+  padding: 8px 12px;
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  background: var(--field);
+  color: var(--ink);
+  /* 16 px minimum : sinon iOS zoome sur le champ */
+  font: inherit;
+  font-size: 18px;
+}
+
+.product-empty {
+  margin: 12px 0 0;
+  color: var(--muted);
+}
+
 .product-group h3 {
   margin: 14px 0 8px;
   font-size: 15px;
